@@ -23,7 +23,7 @@ public class RoadBuilder
 
     public void StartBuildingRoads(Vector3 firstJunctionPosition)
     {
-        _junctionsHandler.BuildFirstJunction(firstJunctionPosition);
+        _junctionsHandler.BuildJunction(firstJunctionPosition);
         _sectionsBuilder.CreateNextSectionPreview();
     }
 
@@ -38,7 +38,8 @@ public class RoadBuilder
     public void BuildRoad()
     {
         Section builtSection = _sectionsBuilder.BuildSection();
-        _junctionsHandler.BuildJunction(NextSectionEndPoint, builtSection);
+        _junctionsHandler.SelectedJunction.OutwardSections.Add(builtSection);
+        _junctionsHandler.BuildJunction(NextSectionEndPoint);
     }
 
     public void SelectJunction(Junction junction)
