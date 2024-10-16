@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: rename and split
 public class MouseRayCaster : MonoBehaviour
 {
     public Vector3 HitPositionOnTerrain { get; private set; }

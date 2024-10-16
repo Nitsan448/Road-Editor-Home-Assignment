@@ -12,12 +12,6 @@ public class RoadCostText : MonoBehaviour
     public void Init(RoadValidityCalculator roadValidityCalculator)
     {
         _roadValidityCalculator = roadValidityCalculator;
-        gameObject.SetActive(false);
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
     }
 
     private void Update()

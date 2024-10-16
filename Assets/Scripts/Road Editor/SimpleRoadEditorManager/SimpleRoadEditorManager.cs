@@ -28,7 +28,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         _editing = true;
-        _roadCostText.Show();
+        _roadCostText.gameObject.SetActive(true);
+        _mouseRayCaster.gameObject.SetActive(true);
         _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
         _sectionsBuilder.CreateNextSectionPreview();
     }
@@ -37,7 +38,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        _mouseRayCaster.Update();
         UpdateSectionBuilder();
         _roadValidityCalculator.CalculateRoadValidity(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
         if (Input.GetKeyDown(KeyCode.Mouse0))

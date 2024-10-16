@@ -20,6 +20,8 @@ public class RoadValidityCalculator
         float heightDifference = Mathf.Abs(startPoint.y - endPoint.y);
         heightDifference = Mathf.Max(1, heightDifference);
         float flatDistance = Vector2.Distance(new Vector2(startPoint.x, startPoint.y), new Vector2(endPoint.x, endPoint.y));
+
+        //TODO: split to two methods
         CurrentRoadCost = flatDistance * heightDifference;
         IsRoadPossible = heightDifference < _maxHeightDiff && CurrentRoadCost < _maxRoadDistance;
     }
