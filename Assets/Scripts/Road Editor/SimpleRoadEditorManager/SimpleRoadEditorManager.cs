@@ -27,8 +27,16 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         Debug.Log("Starting road edit");
+        CreateFirstJunction();
         _editing = true;
     }
+
+    private void CreateFirstJunction()
+    {
+        _sectionsHandler.CreateSectionPreview();
+        _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
+    }
+
 
     private void Update()
     {
@@ -63,22 +71,10 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public void BuildRoad()
     {
         Junction selectedJunction = _junctionsHandler.SelectedJunction;
-        if (selectedJunction == null)
-        {
-            CreateFirstJunction();
-            return;
-        }
-
         Vector3 startPoint = selectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsHandler.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
-    }
-
-    private void CreateFirstJunction()
-    {
-        _sectionsHandler.CreateSectionPreview();
-        _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
     }
 
     public void SelectJunction(Junction junction)
