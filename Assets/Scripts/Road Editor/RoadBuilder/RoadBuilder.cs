@@ -6,6 +6,6 @@ public class RoadBuilder
 {
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
-    private RoadCostCalculator _roadCostCalculator;
+    private RoadValidityCalculator _roadValidityCalculator;
 
 }

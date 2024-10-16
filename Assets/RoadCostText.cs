@@ -18,9 +18,8 @@ public class RoadCostText : MonoBehaviour
 
     private void UpdateRoadCostText()
     {
-        bool isRoadPossible = _simpleRoadEditorManager.RoadCostCalculator.IsRoadPossible;
-        float currentRoadCost = _simpleRoadEditorManager.RoadCostCalculator.CurrentRoadCost;
+        bool isRoadPossible = _simpleRoadEditorManager.RoadValidityCalculator.IsRoadPossible;
+        float currentRoadCost = _simpleRoadEditorManager.RoadValidityCalculator.CurrentRoadCost;
         _text.text = isRoadPossible ? currentRoadCost.ToString("F0") : "No Access";
     }
-
 }
