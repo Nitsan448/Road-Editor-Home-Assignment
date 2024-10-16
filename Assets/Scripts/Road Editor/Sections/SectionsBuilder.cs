@@ -12,10 +12,9 @@ public class SectionsBuilder
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
-        CreateNextSectionPreview();
     }
 
-    private void CreateNextSectionPreview()
+    public void CreateNextSectionPreview()
     {
         _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
     }

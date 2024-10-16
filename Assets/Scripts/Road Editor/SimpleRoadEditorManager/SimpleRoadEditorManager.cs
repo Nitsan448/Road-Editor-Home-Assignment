@@ -25,14 +25,9 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         _editing = true;
-        CreateFirstJunction();
-    }
-
-    private void CreateFirstJunction()
-    {
         _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
+        _sectionsBuilder.CreateNextSectionPreview();
     }
-
 
     private void Update()
     {
