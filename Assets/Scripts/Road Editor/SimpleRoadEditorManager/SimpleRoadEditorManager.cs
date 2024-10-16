@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SimpleRoadEditorManager : RoadEditorManager_Base
@@ -8,11 +9,13 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private TerrainCollider _terrainCollider;
+    [SerializeField] private DistanceText _distanceText;
 
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
     private bool _editing = false;
+
 
     public override bool Init()
     {
@@ -35,9 +38,15 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
         _mouseRayCaster.Update();
         PreviewNextSection();
+        UpdateDistanceText();
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            //TODO: remove this if statement
+            _editing = false;
         }
     }
 
@@ -46,6 +55,12 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsBuilder.UpdateNextSectionPreview(startPoint, endPoint);
+    }
+
+    private void UpdateDistanceText()
+    {
+        _distanceText.UpdateText("No Access 1");
+        _distanceText.UpdatePosition(_mouseRayCaster.HitPositionOnTerrain);
     }
 
     private void EditRoads()
