@@ -21,21 +21,33 @@ public class SectionHandler
             _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
         }
 
-        SetNodeLength(_sectionPreviewNode, Vector3.Distance(startPoint, endPoint));
-        _sectionPreviewNode.transform.position = startPoint;
-        Vector3 direction = endPoint - startPoint;
-        direction.Normalize();
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        _sectionPreviewNode.transform.rotation = targetRotation;
+        SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
     }
 
-    private void SetNodeLength(GameObject node, float length)
+    private void SetNodeTransform(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
-        node.transform.localScale = new Vector3(node.transform.localScale.x, node.transform.localScale.y, length);
+        node.transform.position = startPoint;
+        SetNodeLength(node, startPoint, endPoint);
+        SetNodeRotation(node, startPoint, endPoint);
+    }
+
+    private void SetNodeLength(Transform node, Vector3 startPoint, Vector3 endPoint)
+    {
+        float length = Vector3.Distance(startPoint, endPoint);
+        node.localScale = new Vector3(node.localScale.x, node.localScale.y, length);
+    }
+
+    //TODO: Extract code to different script?
+    private void SetNodeRotation(Transform node, Vector3 startPoint, Vector3 endPoint)
+    {
+        Vector3 direction = endPoint - startPoint;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        node.rotation = targetRotation;
     }
 
     public void BuildSection(Vector3 startPoint, Vector3 endPoint)
     {
-
+        GameObject builtSection = Object.Instantiate(_builtNodePrefab);
+        SetNodeTransform(builtSection.transform, startPoint, endPoint);
     }
 }
