@@ -4,4 +4,5 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
+    public List<Section> ConnectedSections;
 }

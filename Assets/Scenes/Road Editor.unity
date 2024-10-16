@@ -209,7 +209,7 @@ MonoBehaviour:
     UnderConstructionNode: {fileID: 3117202602124380665, guid: 5769a80518215fb4db19ed6d4e84f413, type: 3}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _terrainCollider: {fileID: 1298256760}
-  _distanceText: {fileID: 226602703}
+  _fixedSizeWorldUI: {fileID: 0}
 --- !u!1 &226602698
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 226602700}
   - component: {fileID: 226602699}
   - component: {fileID: 226602703}
+  - component: {fileID: 226602702}
   m_Layer: 0
   m_Name: CostText
   m_TagString: Untagged
@@ -381,6 +382,21 @@ RectTransform:
   m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 30, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &226602702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226602698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b25cb99bcdf9c1429a3e7452a8afd36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _simpleRoadEditorManager: {fileID: 218048690}
+  _textWorldUI: {fileID: 226602703}
+  _text: {fileID: 226602699}
 --- !u!114 &226602703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,8 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c05a8d35596f0746b8c8daeda4ccc2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 226602699}
-  _offsetFromMouse: {x: 0, y: 22, z: 0}
+  _offset: {x: 0, y: 22, z: 0}
 --- !u!1 &281413120
 GameObject:
   m_ObjectHideFlags: 0

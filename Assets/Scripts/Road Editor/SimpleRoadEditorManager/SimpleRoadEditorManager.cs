@@ -6,24 +6,25 @@ using UnityEngine;
 
 public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
+    public RoadCostCalculator RoadCostCalculator { get; private set; }
+    public MouseRayCaster MouseRayCaster { get; private set; }
+
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private TerrainCollider _terrainCollider;
-    [SerializeField] private DistanceText _distanceText;
+    [SerializeField] private FixedSizeWorldUI _fixedSizeWorldUI;
 
-    private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
-    private RoadCostCalculator _roadCostCalculator;
     private bool _editing = false;
 
 
     public override bool Init()
     {
-        _mouseRayCaster = new MouseRayCaster(_terrainCollider);
+        MouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
-        _roadCostCalculator = new RoadCostCalculator(MaxRoadDistance, MaxHeightDif);
+        RoadCostCalculator = new RoadCostCalculator(MaxRoadDistance, MaxHeightDif);
         return true;
     }
 
@@ -38,10 +39,9 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        _mouseRayCaster.Update();
+        MouseRayCaster.Update();
         UpdateSectionBuilder();
-        _roadCostCalculator.CalculateCost(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
-        UpdateDistanceText();
+        RoadCostCalculator.CalculateCost(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
@@ -56,32 +56,18 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     private void UpdateSectionBuilder()
     {
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
-        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
+        Vector3 endPoint = MouseRayCaster.HitPositionOnTerrain;
         _sectionsBuilder.Update(startPoint, endPoint);
-    }
-
-    private void UpdateDistanceText()
-    {
-        if (_roadCostCalculator.IsRoadPossible)
-        {
-            _distanceText.UpdateText(_roadCostCalculator.CurrentRoadCost.ToString("F0"));
-        }
-        else
-        {
-            _distanceText.UpdateText("No Access");
-        }
-        _distanceText.UpdatePosition(_mouseRayCaster.HitPositionOnTerrain);
     }
 
     private void EditRoads()
     {
-        GameObject hitGameObject = _mouseRayCaster.GetHitObject();
+        GameObject hitGameObject = MouseRayCaster.GetHitObject();
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
-            if (_roadCostCalculator.IsRoadPossible)
+            if (RoadCostCalculator.IsRoadPossible)
             {
                 BuildRoad();
-
             }
         }
         else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
@@ -92,7 +78,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void BuildRoad()
     {
-        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
+        Vector3 endPoint = MouseRayCaster.HitPositionOnTerrain;
         _sectionsBuilder.BuildSection();
         _junctionsHandler.BuildJunction(transform, endPoint);
     }
