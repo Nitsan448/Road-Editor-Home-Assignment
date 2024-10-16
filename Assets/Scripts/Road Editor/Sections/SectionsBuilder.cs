@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SectionsHandler
+public class SectionsBuilder
 {
     private GameObject _underConstructionNodePrefab;
     private GameObject _builtNodePrefab;
     private GameObject _sectionPreviewNode;
 
-    public SectionsHandler(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
+    public SectionsBuilder(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
+        CreateNextSectionPreview();
     }
 
-    public void CreateSectionPreview()
+    private void CreateNextSectionPreview()
     {
         _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
     }
 
-    public void UpdateSectionPreview(Vector3 startPoint, Vector3 endPoint)
+    public void UpdateNextSectionPreview(Vector3 startPoint, Vector3 endPoint)
     {
         SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
     }
@@ -38,21 +39,15 @@ public class SectionsHandler
         node.localScale = new Vector3(node.localScale.x, node.localScale.y, length);
     }
 
-    //TODO: Extract code to different script?
     private void SetNodeRotation(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
         Vector3 direction = endPoint - startPoint;
-        if (direction.magnitude <= Mathf.Epsilon)
-        {
-            return;
-        }
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        node.rotation = targetRotation;
+        if (direction.magnitude <= Mathf.Epsilon) return;
+        node.rotation = Quaternion.LookRotation(direction);
     }
 
     public void BuildSection(Vector3 startPoint, Vector3 endPoint)
     {
-        // _sectionPreviewNode.SetActive(false);
         GameObject builtSection = Object.Instantiate(_builtNodePrefab);
         SetNodeTransform(builtSection.transform, startPoint, endPoint);
     }

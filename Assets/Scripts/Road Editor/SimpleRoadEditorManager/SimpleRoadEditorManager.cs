@@ -11,14 +11,14 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
-    private SectionsHandler _sectionsHandler;
+    private SectionsBuilder _sectionsBuilder;
     private bool _editing = false;
 
     public override bool Init()
     {
         _mouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
-        _sectionsHandler = new SectionsHandler(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
+        _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
         return true;
     }
 
@@ -30,7 +30,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void CreateFirstJunction()
     {
-        _sectionsHandler.CreateSectionPreview();
         _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
     }
 
@@ -40,16 +39,18 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         if (!_editing) return;
 
         _mouseRayCaster.Update();
-        PreviewSectionBuilding();
-        EditRoads();
+        PreviewNextSection();
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            EditRoads();
+        }
     }
 
-    private void PreviewSectionBuilding()
+    private void PreviewNextSection()
     {
-        if (_junctionsHandler.SelectedJunction == null) return;
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsHandler.UpdateSectionPreview(startPoint, endPoint);
+        _sectionsBuilder.UpdateNextSectionPreview(startPoint, endPoint);
     }
 
     private void EditRoads()
@@ -69,7 +70,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsHandler.BuildSection(startPoint, endPoint);
+        _sectionsBuilder.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
     }
 
