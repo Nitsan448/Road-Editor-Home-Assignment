@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class MouseRayCaster
 {
-    public Vector3 GetMousePosition()
+    private Camera _mainCamera;
+    public GameObject HitObject { get; private set; }
+    public Vector3 HitPosition { get; private set; }
+
+    public MouseRayCaster()
     {
-        return Vector3.zero;
+        _mainCamera = Camera.main;
     }
 
-    public GameObject GetHitObject()
+    public void Update()
     {
-        return null;
+        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out RaycastHit hitData, 1000);
+        HitPosition = hitData.point;
+        HitObject = hitData.transform.gameObject;
     }
 }

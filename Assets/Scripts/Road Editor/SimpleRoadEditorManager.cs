@@ -33,6 +33,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (_editing)
         {
+            _mouseRayCaster.Update();
             EditRoads();
         }
     }
@@ -51,11 +52,13 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void BuildRoad()
     {
-        // Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
-        Vector3 startPoint = Vector3.zero;
-        Vector3 endPoint = _mouseRayCaster.GetMousePosition();
+        Junction selectedJunction = _junctionsHandler.GetSelectedJunction();
+        Vector3 startPoint = selectedJunction == null ? _firstJunctionPosition : selectedJunction.transform.position;
+        Vector3 endPoint = selectedJunction == null ? _firstJunctionPosition : _mouseRayCaster.HitPosition;
+        Debug.Log(startPoint);
+        Debug.Log(endPoint);
         _sectionBuilder.BuildSection(startPoint, endPoint);
-        _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
+        _junctionsHandler.BuildJunction(transform, endPoint);
     }
 
     public void SelectJunction(Junction junction)

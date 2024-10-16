@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class JunctionsHandler
 {
-    public Junction SelectedJunction => _builtJunctions.Peek();
-
     private GameObject _junctionNodePrefab;
     private Queue<Junction> _builtJunctions = new Queue<Junction>();
 
@@ -25,5 +23,10 @@ public class JunctionsHandler
     {
         Junction junctionToDelete = _builtJunctions.Dequeue();
         Object.Destroy(junctionToDelete.gameObject);
+    }
+
+    public Junction GetSelectedJunction()
+    {
+        return _builtJunctions.Count > 0 ? _builtJunctions.Peek() : null;
     }
 }
