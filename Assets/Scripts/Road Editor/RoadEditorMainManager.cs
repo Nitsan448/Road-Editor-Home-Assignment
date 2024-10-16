@@ -20,7 +20,9 @@ public class RoadEditorMainManager : MonoBehaviour
             return;
         }
 
-        Invoke("StartRoadEditor", 3f);
+        //TODO: return to original method
+        // Invoke("StartRoadEditor", 3f);
+        Invoke("StartRoadEditor", 1f);
     }
 
     void StartRoadEditor()
