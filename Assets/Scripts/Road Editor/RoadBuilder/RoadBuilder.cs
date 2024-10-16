@@ -30,18 +30,10 @@ public class RoadBuilder
 
     public void Update()
     {
-        UpdateSectionBuilder();
-    }
-
-    public void UpdateNextSectionPoints()
-    {
         NextSectionStartPoint = _junctionsHandler.SelectedJunction.transform.position;
         NextSectionEndPoint = _mouseRayCaster.HitPositionOnTerrain;
-    }
-
-    private void UpdateSectionBuilder()
-    {
-        _sectionsBuilder.Update(NextSectionStartPoint, NextSectionEndPoint);
+        _sectionsBuilder.UpdateNextSectionPoints(NextSectionStartPoint, NextSectionEndPoint);
+        _sectionsBuilder.UpdateNextSectionPreview();
     }
 
     public void BuildRoad()

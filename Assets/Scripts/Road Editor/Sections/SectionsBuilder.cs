@@ -22,14 +22,14 @@ public class SectionsBuilder
         _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
     }
 
-    public void Update(Vector3 startPoint, Vector3 endPoint)
+
+    public void UpdateNextSectionPoints(Vector3 startPoint, Vector3 endPoint)
     {
         _nextSectionStartPoint = startPoint;
         _nextSectionEndPoint = endPoint;
-        UpdateNextSectionPreview();
     }
 
-    private void UpdateNextSectionPreview()
+    public void UpdateNextSectionPreview()
     {
         SetNodeTransform(_sectionPreviewNode.transform);
     }

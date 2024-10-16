@@ -27,7 +27,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         _editing = true;
-        //Consider having a child game object that holds those that is set active, instead of each one 
+        //Consider having a child game object that holds those that is set active, instead of each one
         _roadCostText.gameObject.SetActive(true);
         _mouseRayCaster.gameObject.SetActive(true);
         _roadBuilder.StartBuildingRoads(_firstJunctionPosition);
@@ -37,9 +37,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        _roadBuilder.UpdateNextSectionPoints();
-        _roadValidityCalculator.CalculateRoadValidity(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
         _roadBuilder.Update();
+        _roadValidityCalculator.CalculateRoadValidity(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
@@ -51,10 +50,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         GameObject hitGameObject = _mouseRayCaster.GetHitObject();
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
-            if (_roadValidityCalculator.IsRoadPossible)
-            {
-                _roadBuilder.BuildRoad();
-            }
+            BuildRoadIfPossible();
         }
         else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
@@ -62,4 +58,9 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         }
     }
 
+    private void BuildRoadIfPossible()
+    {
+        if (!_roadValidityCalculator.IsRoadPossible) return;
+        _roadBuilder.BuildRoad();
+    }
 }
