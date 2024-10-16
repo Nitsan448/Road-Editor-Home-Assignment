@@ -12,7 +12,6 @@ public class RoadBuilder
     public Vector3 NextSectionStartPoint;
     public Vector3 NextSectionEndPoint;
 
-
     public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadValidityCalculator roadValidityCalculator,
         MouseRayCaster mouseRayCaster)
     {
@@ -38,8 +37,10 @@ public class RoadBuilder
 
     public void BuildRoad()
     {
-        _sectionsBuilder.BuildSection();
+        GameObject builtSection = _sectionsBuilder.BuildSection();
+        _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection.GetComponent<Section>());
         _junctionsHandler.BuildJunction(NextSectionEndPoint);
+        _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection.GetComponent<Section>());
     }
 
     public void SelectJunction(Junction junction)
