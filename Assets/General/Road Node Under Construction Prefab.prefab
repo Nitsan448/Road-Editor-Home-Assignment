@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3117202601877748250}
   - component: {fileID: 3117202601877748251}
   - component: {fileID: 3117202601877748248}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3117202602124380664}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Road Node Under Construction Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

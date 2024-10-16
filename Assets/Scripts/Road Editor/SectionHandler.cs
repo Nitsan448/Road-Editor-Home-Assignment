@@ -22,11 +22,11 @@ public class SectionHandler
         }
 
         SetNodeLength(_sectionPreviewNode, Vector3.Distance(startPoint, endPoint));
-        _sectionPreviewNode.transform.localScale = new Vector3(_sectionPreviewNode.transform.localScale.x,
-            _sectionPreviewNode.transform.localScale.y, Vector3.Distance(startPoint, endPoint));
         _sectionPreviewNode.transform.position = startPoint;
-        Debug.Log(startPoint);
-        Debug.Log(endPoint);
+        Vector3 direction = endPoint - startPoint;
+        direction.Normalize();
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        _sectionPreviewNode.transform.rotation = targetRotation;
     }
 
     private void SetNodeLength(GameObject node, float length)
