@@ -210,8 +210,8 @@ MonoBehaviour:
     BuiltNode: {fileID: 3707586549945980498, guid: 85a626bb66355e340a9bfb3953d00d18, type: 3}
     UnderConstructionNode: {fileID: 3117202602124380665, guid: 5769a80518215fb4db19ed6d4e84f413, type: 3}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
-  _terrainCollider: {fileID: 1298256760}
   _mouseRayCaster: {fileID: 346546361}
+  _roadCostText: {fileID: 226602702}
 --- !u!1 &226602698
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b25cb99bcdf9c1429a3e7452a8afd36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simpleRoadEditorManager: {fileID: 218048690}
   _text: {fileID: 226602699}
 --- !u!114 &226602703
 MonoBehaviour:
@@ -555,6 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea17c81082d2d2640b0c655a9aa745c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _terrainCollider: {fileID: 1298256760}
 --- !u!1 &488568157
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,19 @@ using UnityEngine;
 
 public class RoadCostText : MonoBehaviour
 {
-    [SerializeField] private SimpleRoadEditorManager _simpleRoadEditorManager;
     [SerializeField] private TextMeshPro _text;
+    private RoadValidityCalculator _roadValidityCalculator;
+
+    public void Init(RoadValidityCalculator roadValidityCalculator)
+    {
+        _roadValidityCalculator = roadValidityCalculator;
+        gameObject.SetActive(false);
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
 
     private void Update()
     {
@@ -16,8 +27,6 @@ public class RoadCostText : MonoBehaviour
 
     private void UpdateRoadCostText()
     {
-        bool isRoadPossible = _simpleRoadEditorManager.RoadValidityCalculator.IsRoadPossible;
-        float currentRoadCost = _simpleRoadEditorManager.RoadValidityCalculator.CurrentRoadCost;
-        _text.text = isRoadPossible ? currentRoadCost.ToString("F0") : "No Access";
+        _text.text = _roadValidityCalculator.IsRoadPossible ? _roadValidityCalculator.CurrentRoadCost.ToString("F0") : "No Access";
     }
 }

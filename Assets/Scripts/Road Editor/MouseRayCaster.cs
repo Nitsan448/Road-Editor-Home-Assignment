@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,14 +7,13 @@ public class MouseRayCaster : MonoBehaviour
 {
     public Vector3 HitPositionOnTerrain { get; private set; }
 
+    [SerializeField] private TerrainCollider _terrainCollider;
     private Camera _mainCamera;
-    private TerrainCollider _terrainCollider;
     private Ray _ray;
 
-    public MouseRayCaster(TerrainCollider terrainCollider)
+    private void Start()
     {
         _mainCamera = Camera.main;
-        _terrainCollider = terrainCollider;
     }
 
     public void Update()

@@ -6,13 +6,12 @@ using UnityEngine;
 
 public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
-    public RoadValidityCalculator RoadValidityCalculator { get; private set; }
-
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
-    [SerializeField] private TerrainCollider _terrainCollider;
     [SerializeField] private MouseRayCaster _mouseRayCaster;
+    [SerializeField] private RoadCostText _roadCostText;
 
+    private RoadValidityCalculator _roadValidityCalculator;
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
     private bool _editing = false;
@@ -21,13 +20,15 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
-        RoadValidityCalculator = new RoadValidityCalculator(MaxRoadDistance, MaxHeightDif);
+        _roadValidityCalculator = new RoadValidityCalculator(MaxRoadDistance, MaxHeightDif);
+        _roadCostText.Init(_roadValidityCalculator);
         return true;
     }
 
     public override void StartRoadEdit()
     {
         _editing = true;
+        _roadCostText.Show();
         _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
         _sectionsBuilder.CreateNextSectionPreview();
     }
@@ -38,7 +39,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
         _mouseRayCaster.Update();
         UpdateSectionBuilder();
-        RoadValidityCalculator.CalculateRoadValidity(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
+        _roadValidityCalculator.CalculateRoadValidity(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
@@ -62,7 +63,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         GameObject hitGameObject = _mouseRayCaster.GetHitObject();
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
-            if (RoadValidityCalculator.IsRoadPossible)
+            if (_roadValidityCalculator.IsRoadPossible)
             {
                 BuildRoad();
             }
