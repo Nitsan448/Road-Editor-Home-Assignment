@@ -23,7 +23,7 @@ public class RoadBuilder
 
     public void StartBuildingRoads(Vector3 firstJunctionPosition)
     {
-        _junctionsHandler.BuildJunction(firstJunctionPosition);
+        _junctionsHandler.BuildFirstJunction(firstJunctionPosition);
         _sectionsBuilder.CreateNextSectionPreview();
     }
 
@@ -37,10 +37,8 @@ public class RoadBuilder
 
     public void BuildRoad()
     {
-        GameObject builtSection = _sectionsBuilder.BuildSection();
-        _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection.GetComponent<Section>());
-        _junctionsHandler.BuildJunction(NextSectionEndPoint);
-        _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection.GetComponent<Section>());
+        Section builtSection = _sectionsBuilder.BuildSection();
+        _junctionsHandler.BuildJunction(NextSectionEndPoint, builtSection);
     }
 
     public void SelectJunction(Junction junction)

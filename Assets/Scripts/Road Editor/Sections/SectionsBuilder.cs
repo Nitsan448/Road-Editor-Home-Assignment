@@ -55,10 +55,10 @@ public class SectionsBuilder
         node.rotation = Quaternion.LookRotation(direction);
     }
 
-    public GameObject BuildSection()
+    public Section BuildSection()
     {
         GameObject builtSection = Object.Instantiate(_builtNodePrefab);
         SetNodeTransform(builtSection.transform);
-        return builtSection;
+        return builtSection.GetComponent<Section>();
     }
 }
