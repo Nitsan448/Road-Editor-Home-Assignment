@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class JunctionsHandler
 {
+    public Junction SelectedJunction => _builtJunctions.Peek();
+
     private GameObject _junctionNodePrefab;
-    public Junction SelectedJunction { get; private set; }
+    private Queue<Junction> _builtJunctions = new Queue<Junction>();
 
     public JunctionsHandler(GameObject junctionNodePrefab)
     {
@@ -14,8 +16,14 @@ public class JunctionsHandler
 
     public void BuildJunction(Transform parent, Vector3 junctionPosition)
     {
-        GameObject instantiatedJunction = Object.Instantiate(_junctionNodePrefab, parent);
-        Debug.Log(junctionPosition);
-        instantiatedJunction.transform.position = junctionPosition;
+        GameObject builtJunction = Object.Instantiate(_junctionNodePrefab, parent);
+        builtJunction.transform.position = junctionPosition;
+        _builtJunctions.Enqueue(builtJunction.GetComponent<Junction>());
+    }
+
+    public void DeleteLastJunction()
+    {
+        Junction junctionToDelete = _builtJunctions.Dequeue();
+        Object.Destroy(junctionToDelete.gameObject);
     }
 }

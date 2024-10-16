@@ -43,6 +43,10 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         {
             _selectJunctionOrBuildRoadCommand.Execute();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            _selectJunctionOrBuildRoadCommand.Undo();
+        }
     }
 
     public void BuildRoad()
@@ -57,5 +61,10 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public void SelectJunction(Junction junction)
     {
 
+    }
+
+    public void DeleteLastRoad()
+    {
+        _junctionsHandler.DeleteLastJunction();
     }
 }

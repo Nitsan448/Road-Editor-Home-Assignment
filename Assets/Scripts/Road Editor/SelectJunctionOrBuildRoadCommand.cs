@@ -28,6 +28,6 @@ public class SelectJunctionOrBuildRoadCommand : ICommand
 
     public void Undo()
     {
-        throw new System.NotImplementedException();
+        _simpleRoadEditorManager.DeleteLastRoad();
     }
 }
