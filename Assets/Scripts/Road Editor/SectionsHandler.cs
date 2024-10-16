@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SectionHandler
+public class SectionsHandler
 {
     private GameObject _underConstructionNodePrefab;
     private GameObject _builtNodePrefab;
     private GameObject _sectionPreviewNode;
 
-    public SectionHandler(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
+    public SectionsHandler(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
     }
 
-    public void ShowSectionPreview(Vector3 startPoint, Vector3 endPoint)
+    public void CreateSectionPreview()
     {
-        if (_sectionPreviewNode == null)
-        {
-            _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
-        }
+        _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
+    }
 
+    public void UpdateSectionPreview(Vector3 startPoint, Vector3 endPoint)
+    {
         SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
     }
+
 
     private void SetNodeTransform(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
@@ -47,6 +48,7 @@ public class SectionHandler
 
     public void BuildSection(Vector3 startPoint, Vector3 endPoint)
     {
+        // _sectionPreviewNode.SetActive(false);
         GameObject builtSection = Object.Instantiate(_builtNodePrefab);
         SetNodeTransform(builtSection.transform, startPoint, endPoint);
     }

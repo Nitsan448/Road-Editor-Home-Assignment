@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class MouseRayCaster
 {
-    private Camera _mainCamera;
-    public GameObject HitObject { get; private set; }
-    public Vector3 HitPosition { get; private set; }
+    public Vector3 HitPositionOnTerrain { get; private set; }
 
-    public MouseRayCaster()
+    private Camera _mainCamera;
+    private TerrainCollider _terrainCollider;
+    private Ray _ray;
+
+    public MouseRayCaster(TerrainCollider terrainCollider)
     {
         _mainCamera = Camera.main;
+        _terrainCollider = terrainCollider;
     }
 
     public void Update()
     {
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out RaycastHit hitData, 1000);
-        HitPosition = hitData.point;
-        HitObject = hitData.transform.gameObject;
+        _ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (_terrainCollider.Raycast(_ray, out RaycastHit hitData, 1000))
+        {
+            HitPositionOnTerrain = hitData.point;
+        }
+    }
+
+    public GameObject GetHitObject()
+    {
+        Physics.Raycast(_ray, out RaycastHit hitData, 1000);
+        return hitData.transform.gameObject;
     }
 }

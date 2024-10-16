@@ -208,6 +208,7 @@ MonoBehaviour:
     BuiltNode: {fileID: 3707586549945980498, guid: 85a626bb66355e340a9bfb3953d00d18, type: 3}
     UnderConstructionNode: {fileID: 3117202602124380665, guid: 5769a80518215fb4db19ed6d4e84f413, type: 3}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
+  _terrainCollider: {fileID: 1298256760}
 --- !u!1 &281413120
 GameObject:
   m_ObjectHideFlags: 0

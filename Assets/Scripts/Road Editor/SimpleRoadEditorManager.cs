@@ -7,18 +7,19 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
+    [SerializeField] private TerrainCollider _terrainCollider;
 
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
-    private SectionHandler _sectionHandler;
+    private SectionsHandler _sectionsHandler;
     private SelectJunctionOrBuildRoadCommand _selectJunctionOrBuildRoadCommand;
     private bool _editing = false;
 
     public override bool Init()
     {
-        _mouseRayCaster = new MouseRayCaster();
+        _mouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
-        _sectionHandler = new SectionHandler(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
+        _sectionsHandler = new SectionsHandler(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
         _selectJunctionOrBuildRoadCommand = new SelectJunctionOrBuildRoadCommand(_mouseRayCaster, this);
         return true;
     }
@@ -41,10 +42,10 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void PreviewSectionBuilding()
     {
-        if (_junctionsHandler.GetSelectedJunction() == null) return;
-        Vector3 startPoint = _junctionsHandler.GetSelectedJunction().transform.position;
-        Vector3 endPoint = _mouseRayCaster.HitPosition;
-        _sectionHandler.ShowSectionPreview(startPoint, endPoint);
+        if (_junctionsHandler.SelectedJunction == null) return;
+        Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
+        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
+        _sectionsHandler.UpdateSectionPreview(startPoint, endPoint);
     }
 
     private void EditRoads()
@@ -61,11 +62,24 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void BuildRoad()
     {
-        Junction selectedJunction = _junctionsHandler.GetSelectedJunction();
-        Vector3 startPoint = selectedJunction == null ? _firstJunctionPosition : selectedJunction.transform.position;
-        Vector3 endPoint = selectedJunction == null ? _firstJunctionPosition : _mouseRayCaster.HitPosition;
-        _sectionHandler.BuildSection(startPoint, endPoint);
+        Junction selectedJunction = _junctionsHandler.SelectedJunction;
+        if (selectedJunction == null)
+        {
+            CreateFirstJunction();
+            return;
+        }
+
+        Vector3 startPoint = selectedJunction.transform.position;
+        Debug.Log(startPoint);
+        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
+        _sectionsHandler.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
+    }
+
+    private void CreateFirstJunction()
+    {
+        _sectionsHandler.CreateSectionPreview();
+        _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
     }
 
     public void SelectJunction(Junction junction)

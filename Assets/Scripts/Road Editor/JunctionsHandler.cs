@@ -5,7 +5,9 @@ using UnityEngine;
 public class JunctionsHandler
 {
     private GameObject _junctionNodePrefab;
-    private Queue<Junction> _builtJunctions = new Queue<Junction>();
+
+    // private Queue<Junction> _builtJunctions = new Queue<Junction>();
+    public Junction SelectedJunction { get; private set; }
 
     public JunctionsHandler(GameObject junctionNodePrefab)
     {
@@ -16,17 +18,20 @@ public class JunctionsHandler
     {
         GameObject builtJunction = Object.Instantiate(_junctionNodePrefab, parent);
         builtJunction.transform.position = junctionPosition;
-        _builtJunctions.Enqueue(builtJunction.GetComponent<Junction>());
+        SelectedJunction = builtJunction.GetComponent<Junction>();
+        // _builtJunctions.Enqueue(builtJunction.GetComponent<Junction>());
     }
 
     public void DeleteLastJunction()
     {
-        Junction junctionToDelete = _builtJunctions.Dequeue();
-        Object.Destroy(junctionToDelete.gameObject);
+        // Junction junctionToDelete = _builtJunctions.Dequeue();
+        // Object.Destroy(junctionToDelete.gameObject);
+        Object.Destroy(SelectedJunction.gameObject);
     }
 
-    public Junction GetSelectedJunction()
-    {
-        return _builtJunctions.Count > 0 ? _builtJunctions.Peek() : null;
-    }
+    // public Junction GetSelectedJunction()
+    // {
+    //     Debug.Log(_builtJunctions.Count > 0 ? _builtJunctions.Peek().transform.position : Vector3.zero);
+    //     return _builtJunctions.Count > 0 ? _builtJunctions.Peek() : null;
+    // }
 }
