@@ -14,6 +14,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
+    private RoadCostCalculator _roadCostCalculator;
     private bool _editing = false;
 
 
@@ -22,6 +23,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _mouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
+        _roadCostCalculator = new RoadCostCalculator();
         return true;
     }
 
@@ -37,7 +39,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         if (!_editing) return;
 
         _mouseRayCaster.Update();
-        PreviewNextSection();
+        UpdateSectionBuilder();
+        _roadCostCalculator.CalculateCost(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
         UpdateDistanceText();
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -50,16 +53,16 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         }
     }
 
-    private void PreviewNextSection()
+    private void UpdateSectionBuilder()
     {
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsBuilder.UpdateNextSectionPreview(startPoint, endPoint);
+        _sectionsBuilder.Update(startPoint, endPoint);
     }
 
     private void UpdateDistanceText()
     {
-        _distanceText.UpdateText("No Access 1");
+        _distanceText.UpdateText(_roadCostCalculator.CurrentRoadCost.ToString("F0"));
         _distanceText.UpdatePosition(_mouseRayCaster.HitPositionOnTerrain);
     }
 
@@ -78,9 +81,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void BuildRoad()
     {
-        Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsBuilder.BuildSection(startPoint, endPoint);
+        _sectionsBuilder.BuildSection();
         _junctionsHandler.BuildJunction(transform, endPoint);
     }
 

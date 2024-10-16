@@ -8,6 +8,9 @@ public class SectionsBuilder
     private GameObject _builtNodePrefab;
     private GameObject _sectionPreviewNode;
 
+    public Vector3 NextSectionStartPoint { get; private set; }
+    public Vector3 NextSectionEndPoint { get; private set; }
+
     public SectionsBuilder(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
@@ -19,9 +22,16 @@ public class SectionsBuilder
         _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
     }
 
-    public void UpdateNextSectionPreview(Vector3 startPoint, Vector3 endPoint)
+    public void Update(Vector3 startPoint, Vector3 endPoint)
     {
-        SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
+        NextSectionStartPoint = startPoint;
+        NextSectionEndPoint = endPoint;
+        UpdateNextSectionPreview();
+    }
+
+    private void UpdateNextSectionPreview()
+    {
+        SetNodeTransform(_sectionPreviewNode.transform, NextSectionStartPoint, NextSectionEndPoint);
     }
 
 
@@ -45,9 +55,9 @@ public class SectionsBuilder
         node.rotation = Quaternion.LookRotation(direction);
     }
 
-    public void BuildSection(Vector3 startPoint, Vector3 endPoint)
+    public void BuildSection()
     {
         GameObject builtSection = Object.Instantiate(_builtNodePrefab);
-        SetNodeTransform(builtSection.transform, startPoint, endPoint);
+        SetNodeTransform(builtSection.transform, NextSectionStartPoint, NextSectionEndPoint);
     }
 }
