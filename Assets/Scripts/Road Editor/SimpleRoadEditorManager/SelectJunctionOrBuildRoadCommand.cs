@@ -16,7 +16,6 @@ public class SelectJunctionOrBuildRoadCommand : ICommand
     public void Execute()
     {
         GameObject hitGameObject = _mouseRayCaster.GetHitObject();
-        Debug.Log(hitGameObject.name);
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
             _simpleRoadEditorManager.BuildRoad();

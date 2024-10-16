@@ -12,7 +12,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
     private SectionsHandler _sectionsHandler;
-    private SelectJunctionOrBuildRoadCommand _selectJunctionOrBuildRoadCommand;
     private bool _editing = false;
 
     public override bool Init()
@@ -20,15 +19,13 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _mouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsHandler = new SectionsHandler(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
-        _selectJunctionOrBuildRoadCommand = new SelectJunctionOrBuildRoadCommand(_mouseRayCaster, this);
         return true;
     }
 
     public override void StartRoadEdit()
     {
-        Debug.Log("Starting road edit");
-        CreateFirstJunction();
         _editing = true;
+        CreateFirstJunction();
     }
 
     private void CreateFirstJunction()
@@ -40,12 +37,11 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void Update()
     {
-        if (_editing)
-        {
-            _mouseRayCaster.Update();
-            PreviewSectionBuilding();
-            EditRoads();
-        }
+        if (!_editing) return;
+
+        _mouseRayCaster.Update();
+        PreviewSectionBuilding();
+        EditRoads();
     }
 
     private void PreviewSectionBuilding()
@@ -58,20 +54,20 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void EditRoads()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        GameObject hitGameObject = _mouseRayCaster.GetHitObject();
+        if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
-            _selectJunctionOrBuildRoadCommand.Execute();
+            BuildRoad();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            _selectJunctionOrBuildRoadCommand.Undo();
+            SelectJunction(junction);
         }
     }
 
     public void BuildRoad()
     {
-        Junction selectedJunction = _junctionsHandler.SelectedJunction;
-        Vector3 startPoint = selectedJunction.transform.position;
+        Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsHandler.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
@@ -79,12 +75,11 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void SelectJunction(Junction junction)
     {
-        Debug.Log("here");
         _junctionsHandler.SelectedJunction = junction;
     }
 
     public void DeleteLastRoad()
     {
-        _junctionsHandler.DeleteLastJunction();
+        _junctionsHandler.DeleteSelectedJunction();
     }
 }
