@@ -16,11 +16,12 @@ public class SelectJunctionOrBuildRoadCommand : ICommand
     public void Execute()
     {
         GameObject hitGameObject = _mouseRayCaster.GetHitObject();
+        Debug.Log(hitGameObject.name);
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
             _simpleRoadEditorManager.BuildRoad();
         }
-        else if (hitGameObject.TryGetComponent(out Junction junction))
+        else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
             _simpleRoadEditorManager.SelectJunction(junction);
         }

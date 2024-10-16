@@ -42,6 +42,10 @@ public class SectionsHandler
     private void SetNodeRotation(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
         Vector3 direction = endPoint - startPoint;
+        if (direction.magnitude <= Mathf.Epsilon)
+        {
+            return;
+        }
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         node.rotation = targetRotation;
     }

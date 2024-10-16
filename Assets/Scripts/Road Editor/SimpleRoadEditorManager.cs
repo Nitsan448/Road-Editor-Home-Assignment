@@ -70,7 +70,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         }
 
         Vector3 startPoint = selectedJunction.transform.position;
-        Debug.Log(startPoint);
         Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsHandler.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
@@ -84,7 +83,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void SelectJunction(Junction junction)
     {
-
+        Debug.Log("here");
+        _junctionsHandler.SelectedJunction = junction;
     }
 
     public void DeleteLastRoad()

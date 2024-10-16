@@ -7,7 +7,7 @@ public class JunctionsHandler
     private GameObject _junctionNodePrefab;
 
     // private Queue<Junction> _builtJunctions = new Queue<Junction>();
-    public Junction SelectedJunction { get; private set; }
+    public Junction SelectedJunction;
 
     public JunctionsHandler(GameObject junctionNodePrefab)
     {

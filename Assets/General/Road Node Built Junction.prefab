@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2574370097698939201}
-  - component: {fileID: 7742298373938973005}
+  - component: {fileID: 4186716633287987662}
   m_Layer: 0
   m_Name: Road Node Built Junction
   m_TagString: Untagged
@@ -128,7 +128,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7742298373938973005
+--- !u!114 &4186716633287987662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
