@@ -7,13 +7,11 @@ using UnityEngine;
 public class RoadCostText : MonoBehaviour
 {
     [SerializeField] private SimpleRoadEditorManager _simpleRoadEditorManager;
-    [SerializeField] private FixedSizeWorldUI _textWorldUI;
     [SerializeField] private TextMeshPro _text;
 
     private void Update()
     {
         UpdateRoadCostText();
-        _textWorldUI.UpdatePosition(_simpleRoadEditorManager.MouseRayCaster.HitPositionOnTerrain);
     }
 
     private void UpdateRoadCostText()

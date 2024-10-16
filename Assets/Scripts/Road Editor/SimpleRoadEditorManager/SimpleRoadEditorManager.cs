@@ -7,21 +7,18 @@ using UnityEngine;
 public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
     public RoadValidityCalculator RoadValidityCalculator { get; private set; }
-    public MouseRayCaster MouseRayCaster { get; private set; }
 
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private TerrainCollider _terrainCollider;
-    [SerializeField] private FixedSizeWorldUI _fixedSizeWorldUI;
+    [SerializeField] private MouseRayCaster _mouseRayCaster;
 
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
     private bool _editing = false;
 
-
     public override bool Init()
     {
-        MouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
         RoadValidityCalculator = new RoadValidityCalculator(MaxRoadDistance, MaxHeightDif);
@@ -39,7 +36,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        MouseRayCaster.Update();
+        _mouseRayCaster.Update();
         UpdateSectionBuilder();
         RoadValidityCalculator.CalculateRoadValidity(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -56,13 +53,13 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     private void UpdateSectionBuilder()
     {
         Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
-        Vector3 endPoint = MouseRayCaster.HitPositionOnTerrain;
+        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsBuilder.Update(startPoint, endPoint);
     }
 
     private void EditRoads()
     {
-        GameObject hitGameObject = MouseRayCaster.GetHitObject();
+        GameObject hitGameObject = _mouseRayCaster.GetHitObject();
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
             if (RoadValidityCalculator.IsRoadPossible)
@@ -78,7 +75,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public void BuildRoad()
     {
-        Vector3 endPoint = MouseRayCaster.HitPositionOnTerrain;
+        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
         _sectionsBuilder.BuildSection();
         _junctionsHandler.BuildJunction(transform, endPoint);
     }

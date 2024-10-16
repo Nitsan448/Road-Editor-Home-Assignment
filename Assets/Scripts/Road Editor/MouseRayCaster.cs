@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseRayCaster
+public class MouseRayCaster : MonoBehaviour
 {
     public Vector3 HitPositionOnTerrain { get; private set; }
 
