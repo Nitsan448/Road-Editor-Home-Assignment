@@ -7,5 +7,56 @@ public class RoadBuilder
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
     private RoadValidityCalculator _roadValidityCalculator;
+    private MouseRayCaster _mouseRayCaster;
 
+    public Vector3 NextSectionStartPoint;
+    public Vector3 NextSectionEndPoint;
+
+
+    public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadValidityCalculator roadValidityCalculator,
+        MouseRayCaster mouseRayCaster)
+    {
+        _roadValidityCalculator = roadValidityCalculator;
+        _mouseRayCaster = mouseRayCaster;
+        _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
+        _sectionsBuilder = new SectionsBuilder(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
+    }
+
+    public void StartBuildingRoads(Vector3 firstJunctionPosition)
+    {
+        _junctionsHandler.BuildJunction(firstJunctionPosition);
+        _sectionsBuilder.CreateNextSectionPreview();
+    }
+
+    public void Update()
+    {
+        UpdateSectionBuilder();
+    }
+
+    public void UpdateNextSectionPoints()
+    {
+        NextSectionStartPoint = _junctionsHandler.SelectedJunction.transform.position;
+        NextSectionEndPoint = _mouseRayCaster.HitPositionOnTerrain;
+    }
+
+    private void UpdateSectionBuilder()
+    {
+        _sectionsBuilder.Update(NextSectionStartPoint, NextSectionEndPoint);
+    }
+
+    public void BuildRoad()
+    {
+        _sectionsBuilder.BuildSection();
+        _junctionsHandler.BuildJunction(NextSectionEndPoint);
+    }
+
+    public void SelectJunction(Junction junction)
+    {
+        _junctionsHandler.SelectedJunction = junction;
+    }
+
+    public void DeleteLastRoad()
+    {
+        _junctionsHandler.DeleteSelectedJunction();
+    }
 }

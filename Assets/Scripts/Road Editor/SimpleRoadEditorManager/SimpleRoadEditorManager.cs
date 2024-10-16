@@ -12,15 +12,14 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     [SerializeField] private RoadCostText _roadCostText;
 
     private RoadValidityCalculator _roadValidityCalculator;
-    private JunctionsHandler _junctionsHandler;
-    private SectionsBuilder _sectionsBuilder;
+    private RoadBuilder _roadBuilder;
     private bool _editing = false;
+
 
     public override bool Init()
     {
-        _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
-        _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
         _roadValidityCalculator = new RoadValidityCalculator(MaxRoadDistance, MaxHeightDif);
+        _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadValidityCalculator, _mouseRayCaster);
         _roadCostText.Init(_roadValidityCalculator);
         return true;
     }
@@ -28,34 +27,23 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         _editing = true;
+        //Consider having a child game object that holds those that is set active, instead of each one 
         _roadCostText.gameObject.SetActive(true);
         _mouseRayCaster.gameObject.SetActive(true);
-        _junctionsHandler.BuildJunction(transform, _firstJunctionPosition);
-        _sectionsBuilder.CreateNextSectionPreview();
+        _roadBuilder.StartBuildingRoads(_firstJunctionPosition);
     }
 
     private void Update()
     {
         if (!_editing) return;
 
-        UpdateSectionBuilder();
-        _roadValidityCalculator.CalculateRoadValidity(_sectionsBuilder.NextSectionStartPoint, _sectionsBuilder.NextSectionEndPoint);
+        _roadBuilder.UpdateNextSectionPoints();
+        _roadValidityCalculator.CalculateRoadValidity(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
+        _roadBuilder.Update();
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            //TODO: remove this if statement
-            _editing = false;
-        }
-    }
-
-    private void UpdateSectionBuilder()
-    {
-        Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
-        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsBuilder.Update(startPoint, endPoint);
     }
 
     private void EditRoads()
@@ -65,29 +53,13 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         {
             if (_roadValidityCalculator.IsRoadPossible)
             {
-                BuildRoad();
+                _roadBuilder.BuildRoad();
             }
         }
         else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            SelectJunction(junction);
+            _roadBuilder.SelectJunction(junction);
         }
     }
 
-    public void BuildRoad()
-    {
-        Vector3 endPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsBuilder.BuildSection();
-        _junctionsHandler.BuildJunction(transform, endPoint);
-    }
-
-    public void SelectJunction(Junction junction)
-    {
-        _junctionsHandler.SelectedJunction = junction;
-    }
-
-    public void DeleteLastRoad()
-    {
-        _junctionsHandler.DeleteSelectedJunction();
-    }
 }

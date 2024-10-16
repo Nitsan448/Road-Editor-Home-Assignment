@@ -13,9 +13,9 @@ public class JunctionsHandler
         _junctionNodePrefab = junctionNodePrefab;
     }
 
-    public void BuildJunction(Transform parent, Vector3 junctionPosition)
+    public void BuildJunction(Vector3 junctionPosition)
     {
-        GameObject builtJunction = Object.Instantiate(_junctionNodePrefab, parent);
+        GameObject builtJunction = Object.Instantiate(_junctionNodePrefab);
         builtJunction.transform.position = junctionPosition;
         SelectedJunction = builtJunction.GetComponent<Junction>();
     }
