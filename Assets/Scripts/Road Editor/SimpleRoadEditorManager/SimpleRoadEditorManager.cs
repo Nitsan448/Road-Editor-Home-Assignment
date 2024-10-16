@@ -23,7 +23,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _mouseRayCaster = new MouseRayCaster(_terrainCollider);
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
-        _roadCostCalculator = new RoadCostCalculator();
+        _roadCostCalculator = new RoadCostCalculator(MaxRoadDistance, MaxHeightDif);
         return true;
     }
 
@@ -62,7 +62,14 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void UpdateDistanceText()
     {
-        _distanceText.UpdateText(_roadCostCalculator.CurrentRoadCost.ToString("F0"));
+        if (_roadCostCalculator.IsRoadPossible)
+        {
+            _distanceText.UpdateText(_roadCostCalculator.CurrentRoadCost.ToString("F0"));
+        }
+        else
+        {
+            _distanceText.UpdateText("No Access");
+        }
         _distanceText.UpdatePosition(_mouseRayCaster.HitPositionOnTerrain);
     }
 
@@ -71,7 +78,11 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         GameObject hitGameObject = _mouseRayCaster.GetHitObject();
         if (hitGameObject.TryGetComponent(out Terrain terrain))
         {
-            BuildRoad();
+            if (_roadCostCalculator.IsRoadPossible)
+            {
+                BuildRoad();
+
+            }
         }
         else if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
