@@ -10,7 +10,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
-    private SectionBuilder _sectionBuilder;
+    private SectionHandler _sectionHandler;
     private SelectJunctionOrBuildRoadCommand _selectJunctionOrBuildRoadCommand;
     private bool _editing = false;
 
@@ -18,7 +18,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         _mouseRayCaster = new MouseRayCaster();
         _junctionsHandler = new JunctionsHandler(_roadNodePrefabsReferencer.JunctionNode);
-        _sectionBuilder = new SectionBuilder();
+        _sectionHandler = new SectionHandler(_roadNodePrefabsReferencer.UnderConstructionNode, _roadNodePrefabsReferencer.BuiltNode);
         _selectJunctionOrBuildRoadCommand = new SelectJunctionOrBuildRoadCommand(_mouseRayCaster, this);
         return true;
     }
@@ -34,8 +34,17 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         if (_editing)
         {
             _mouseRayCaster.Update();
+            PreviewSectionBuilding();
             EditRoads();
         }
+    }
+
+    private void PreviewSectionBuilding()
+    {
+        if (_junctionsHandler.GetSelectedJunction() == null) return;
+        Vector3 startPoint = _junctionsHandler.GetSelectedJunction().transform.position;
+        Vector3 endPoint = _mouseRayCaster.HitPosition;
+        _sectionHandler.ShowSectionPreview(startPoint, endPoint);
     }
 
     private void EditRoads()
@@ -55,9 +64,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         Junction selectedJunction = _junctionsHandler.GetSelectedJunction();
         Vector3 startPoint = selectedJunction == null ? _firstJunctionPosition : selectedJunction.transform.position;
         Vector3 endPoint = selectedJunction == null ? _firstJunctionPosition : _mouseRayCaster.HitPosition;
-        Debug.Log(startPoint);
-        Debug.Log(endPoint);
-        _sectionBuilder.BuildSection(startPoint, endPoint);
+        _sectionHandler.BuildSection(startPoint, endPoint);
         _junctionsHandler.BuildJunction(transform, endPoint);
     }
 
