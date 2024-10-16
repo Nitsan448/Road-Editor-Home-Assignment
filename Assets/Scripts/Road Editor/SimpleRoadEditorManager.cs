@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
+    [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
+
     private MouseRayCaster _mouseRayCaster;
     private JunctionsHandler _junctionsHandler;
     private SectionBuilder _sectionBuilder;
@@ -25,7 +27,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         Debug.Log("Starting road edit");
         _editing = true;
-
     }
 
     private void Update()
@@ -44,12 +45,11 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         }
     }
 
-
     public void BuildRoad()
     {
-        Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
+        // Vector3 startPoint = _junctionsHandler.SelectedJunction.transform.position;
+        Vector3 startPoint = Vector3.zero;
         Vector3 endPoint = _mouseRayCaster.GetMousePosition();
-        Debug.Log(endPoint);
         _sectionBuilder.BuildSection(startPoint, endPoint);
     }
 

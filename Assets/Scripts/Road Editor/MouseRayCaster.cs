@@ -11,6 +11,6 @@ public class MouseRayCaster
 
     public GameObject GetHitObject()
     {
-        return new GameObject();
+        return null;
     }
 }
