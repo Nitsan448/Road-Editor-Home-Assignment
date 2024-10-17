@@ -7,12 +7,14 @@ public class RoadEditUI : MonoBehaviour
 {
     [SerializeField] private RoadEditorManager_Base _roadEditorManager;
     [SerializeField] private RoadCostText _roadCostText;
+    [SerializeField] private RoadCostCalculator _roadCostCalculator;
 
     [SerializeField] private GameObject Ui;
 
     private void Start()
     {
         Ui.gameObject.SetActive(false);
+        _roadCostText.Init(_roadCostCalculator);
     }
 
     private void OnEnable()

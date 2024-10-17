@@ -291,6 +291,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &217722899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217722900}
+  - component: {fileID: 217722901}
+  m_Layer: 0
+  m_Name: Road Cost Calculator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &217722900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217722899}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 865898130}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &217722901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217722899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ec658871208744f8933a7dc4d7c018, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &218048688
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,7 +386,7 @@ MonoBehaviour:
     UnderConstructionNode: {fileID: 3117202602124380665, guid: 5769a80518215fb4db19ed6d4e84f413, type: 3}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCaster: {fileID: 346546361}
-  _roadCostText: {fileID: 226602702}
+  _roadCostCalculator: {fileID: 217722901}
 --- !u!1 &226602698
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,6 +1036,7 @@ Transform:
   - {fileID: 218048689}
   - {fileID: 346546360}
   - {fileID: 1039345226}
+  - {fileID: 217722900}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1288,8 +1332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723677064175dc249b19d565404232c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simpleRoadEditorManager: {fileID: 218048690}
+  _roadEditorManager: {fileID: 218048690}
   _roadCostText: {fileID: 226602702}
+  _roadCostCalculator: {fileID: 217722901}
   Ui: {fileID: 1215515656}
 --- !u!1 &1215515656
 GameObject:
@@ -1306,7 +1351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1215515657
 Transform:
   m_ObjectHideFlags: 0

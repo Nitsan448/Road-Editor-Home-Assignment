@@ -7,7 +7,12 @@ using UnityEngine;
 public class RoadCostText : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _text;
-    [SerializeField] private RoadCostCalculator _roadCostCalculator;
+    private RoadCostCalculator _roadCostCalculator;
+
+    public void Init(RoadCostCalculator roadCostCalculator)
+    {
+        _roadCostCalculator = roadCostCalculator;
+    }
 
     public void UpdateRoadCostText()
     {
