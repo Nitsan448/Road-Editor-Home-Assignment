@@ -23,16 +23,16 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            RoadEditor.BuildSectionToJunction(junction);
+            _roadEditor.BuildSectionToJunction(junction);
         }
         else if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Section section))
         {
             //This breaks save system
-            RoadEditor.BuildSectionToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
+            _roadEditor.BuildSectionToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
         }
         else
         {
-            RoadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
+            _roadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
         }
     }
 
@@ -41,7 +41,7 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            RoadEditor.SelectJunction(junction);
+            _roadEditor.SelectJunction(junction);
         }
     }
 }

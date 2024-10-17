@@ -17,7 +17,7 @@ public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            RoadEditor.SelectJunction(junction);
+            _roadEditor.SelectJunction(junction);
             return;
         }
 
@@ -27,6 +27,6 @@ public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
     private void BuildRoadIfPossible()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        RoadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
+        _roadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
     }
 }

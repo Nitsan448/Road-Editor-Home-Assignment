@@ -57,6 +57,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
         LoadJunctionsData(loadedData);
         LoadSectionsData(loadedData);
         _junctionsEditor.SelectedJunction = _junctionsByIds[loadedData.SelectedJunctionId];
+        Debug.Log(_junctionsEditor.SelectedJunction);
     }
 
     private void LoadJunctionsData(GameData loadedData)
@@ -79,6 +80,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
         for (int i = _sectionsEditor.Sections.Count - 1; i >= 0; i--)
         {
             Section section = _sectionsEditor.Sections[i];
+            //Has been destroyed, but you are still trying to access it
             _sectionsEditor.DeleteSection(section);
         }
         foreach (SectionPersistentData sectionData in loadedData.Sections)

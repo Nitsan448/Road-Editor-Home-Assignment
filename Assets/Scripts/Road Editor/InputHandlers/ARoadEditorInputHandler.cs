@@ -5,13 +5,13 @@ using UnityEngine;
 public abstract class ARoadEditorInputHandler : MonoBehaviour
 {
     protected MouseRayCastsManager _mouseRayCastsManager;
-    protected RoadEditor RoadEditor;
+    protected RoadEditor _roadEditor;
     protected RoadCostCalculator _roadCostCalculator;
 
     public void Init(MouseRayCastsManager mouseRayCastsManager, RoadEditor roadEditor, RoadCostCalculator roadCostCalculator)
     {
         _mouseRayCastsManager = mouseRayCastsManager;
-        RoadEditor = roadEditor;
+        _roadEditor = roadEditor;
         _roadCostCalculator = roadCostCalculator;
     }
 

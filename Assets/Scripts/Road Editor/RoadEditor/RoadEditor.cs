@@ -60,7 +60,7 @@ public class RoadEditor
     {
         _roadBuilder.BuildSectionBetweenJunctions(junction, section.StartJunction);
         _roadBuilder.BuildSectionBetweenJunctions(junction, section.EndJunction);
-        section.Delete();
+        _sectionsEditor.DeleteSection(section);
     }
 
     public void SelectJunction(Junction junction)

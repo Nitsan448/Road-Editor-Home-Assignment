@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class RoadEditorManager : RoadEditorManager_Base
 {
-    public Action StartedRoadEdit;
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
@@ -29,7 +28,6 @@ public class RoadEditorManager : RoadEditorManager_Base
     public override void StartRoadEdit()
     {
         _editing = true;
-        StartedRoadEdit?.Invoke();
         _mouseRayCastsManager.gameObject.SetActive(true);
         _roadEditUIManager.ShowUI();
         _roadEditor.StartBuildingRoads(_firstJunctionPosition);
