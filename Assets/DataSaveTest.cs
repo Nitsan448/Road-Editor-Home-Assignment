@@ -17,12 +17,12 @@ public class DataSaveTest : MonoBehaviour, IDataPersistence
         DataPersistenceManager.Instance.Unregister(this);
     }
 
-    public void SaveData(GameData data)
+    public void SaveData(GameData dataToSave)
     {
         // data.DeathCount = _deathCount;
     }
 
-    public void LoadData(GameData data)
+    public void LoadData(GameData loadedData)
     {
         // _deathCount = data.DeathCount;
     }

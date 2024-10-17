@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class JunctionsHandler : IDataPersistence, IDisposable
+public class JunctionsHandler
 {
     public Junction SelectedJunction;
 
     private GameObject _junctionNodePrefab;
     private int _lastBuiltJunctionId = 0;
 
-    private List<Junction> _junctions = new List<Junction>();
+    public List<Junction> Junctions { get; private set; } = new List<Junction>();
 
     public JunctionsHandler(GameObject junctionNodePrefab)
     {
         _junctionNodePrefab = junctionNodePrefab;
-        DataPersistenceManager.Instance.Register(this);
     }
 
     public void BuildJunction(Vector3 junctionPosition)
@@ -26,39 +25,12 @@ public class JunctionsHandler : IDataPersistence, IDisposable
         SelectedJunction = builtJunction.GetComponent<Junction>();
         SelectedJunction.Id = _lastBuiltJunctionId;
         _lastBuiltJunctionId++;
-        _junctions.Add(SelectedJunction);
+        Junctions.Add(SelectedJunction);
     }
 
-    public void DeleteSelectedJunction()
+    public void DeleteJunction(Junction junction)
     {
-        Object.Destroy(SelectedJunction.gameObject);
+        Object.Destroy(junction.gameObject);
     }
 
-
-    public void SaveData(GameData data)
-    {
-        data.Junctions.Clear();
-        foreach (Junction junction in _junctions)
-        {
-            data.Junctions.Add(junction.GetJunctionPersistentData());
-            if (SelectedJunction == junction)
-            {
-                data.SelectedJunctionId = junction.Id;
-            }
-        }
-    }
-
-    public void LoadData(GameData data)
-    {
-        foreach (JunctionPersistentData junctionData in data.Junctions)
-        {
-            BuildJunction(junctionData.Position);
-            SelectedJunction.Id = junctionData.Id;
-        }
-    }
-
-    public void Dispose()
-    {
-        DataPersistenceManager.Instance.Unregister(this);
-    }
 }

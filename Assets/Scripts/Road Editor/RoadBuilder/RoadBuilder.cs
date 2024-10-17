@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadBuilder
+public class RoadBuilder : IDataPersistence, IDisposable
 {
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
@@ -19,6 +20,7 @@ public class RoadBuilder
         _mouseRayCaster = mouseRayCaster;
         _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
+        DataPersistenceManager.Instance.Register(this);
     }
 
     public void StartBuildingRoads(Vector3 firstJunctionPosition)
@@ -49,8 +51,67 @@ public class RoadBuilder
         _junctionsHandler.SelectedJunction = junction;
     }
 
-    public void DeleteLastRoad()
+    public void Dispose()
     {
-        _junctionsHandler.DeleteSelectedJunction();
+        DataPersistenceManager.Instance.Unregister(this);
+    }
+
+    public void SaveData(GameData dataToSave)
+    {
+        SaveJunctionsData(dataToSave);
+        SaveSectionsData(dataToSave);
+    }
+
+    private void SaveJunctionsData(GameData data)
+    {
+        data.Junctions.Clear();
+        foreach (Junction junction in _junctionsHandler.Junctions)
+        {
+            data.Junctions.Add(junction.GetJunctionPersistentData());
+            if (_junctionsHandler.SelectedJunction == junction)
+            {
+                data.SelectedJunctionId = junction.Id;
+            }
+        }
+    }
+
+    private void SaveSectionsData(GameData data)
+    {
+        data.Sections.Clear();
+        foreach (Section section in _sectionsBuilder.Sections)
+        {
+            data.Sections.Add(section.GetSectionPersistentData());
+        }
+    }
+
+    public void LoadData(GameData loadedData)
+    {
+        LoadJunctionsData(loadedData);
+        LoadSectionsData(loadedData);
+    }
+
+    private void LoadJunctionsData(GameData loadedData)
+    {
+        foreach (Junction junction in _junctionsHandler.Junctions)
+        {
+            _junctionsHandler.DeleteJunction(junction);
+        }
+        foreach (JunctionPersistentData junctionData in loadedData.Junctions)
+        {
+            _junctionsHandler.BuildJunction(junctionData.Position);
+            _junctionsHandler.SelectedJunction.Id = junctionData.Id;
+        }
+    }
+
+    private void LoadSectionsData(GameData loadedData)
+    {
+        foreach (Section section in _sectionsBuilder.Sections)
+        {
+            _sectionsBuilder.DeleteSection(section);
+        }
+        foreach (SectionPersistentData sectionData in loadedData.Sections)
+        {
+            // UpdateNextSectionPoints(sectionData.StartJunctionId);
+        }
     }
 }
