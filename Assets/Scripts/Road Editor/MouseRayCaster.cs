@@ -26,6 +26,7 @@ public class MouseRayCaster : MonoBehaviour
         }
     }
 
+    //TODO: color and scale highlighted objects
     public GameObject GetHitObject()
     {
         Physics.Raycast(_ray, out RaycastHit hitData, 1000);
