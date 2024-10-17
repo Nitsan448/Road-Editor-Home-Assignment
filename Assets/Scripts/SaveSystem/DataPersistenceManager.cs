@@ -30,9 +30,6 @@ public class DataPersistenceManager : MonoBehaviour
     private void Start()
     {
         _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
-        NewGame();
-        Invoke("SaveGame", 3f);
-        // LoadGame();
     }
 
     public void Register(IDataPersistence dataPersistenceObject)
@@ -45,14 +42,12 @@ public class DataPersistenceManager : MonoBehaviour
         _dataPersistenceObjects.Remove(dataPersistenceObject);
     }
 
-
-    public void NewGame()
-    {
-        _gameData = new GameData();
-    }
-
     public void SaveGame()
     {
+        if (_gameData == null)
+        {
+            _gameData = new GameData();
+        }
         Debug.Log("Saving");
         foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
         {
@@ -69,13 +64,14 @@ public class DataPersistenceManager : MonoBehaviour
         _gameData = _fileDataHandler.Load();
         if (_gameData == null)
         {
+            _gameData = new GameData();
             return;
         }
         foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
         {
             dataPersistenceObject.LoadData(_gameData);
         }
-
+        Debug.Log(_gameData.CameraPosition);
         //TODO: extract from here
         Camera.main.transform.position = _gameData.CameraPosition;
     }

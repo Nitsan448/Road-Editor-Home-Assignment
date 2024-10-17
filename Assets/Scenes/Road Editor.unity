@@ -702,6 +702,7 @@ GameObject:
   - component: {fileID: 399171718}
   - component: {fileID: 399171717}
   - component: {fileID: 399171716}
+  - component: {fileID: 399171719}
   m_Layer: 0
   m_Name: LoadButton
   m_TagString: Untagged
@@ -811,6 +812,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399171714}
   m_CullTransparentMesh: 1
+--- !u!114 &399171719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399171714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5f9ae8102d5b149804fe4f49aae145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &488568157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,6 +1500,7 @@ GameObject:
   - component: {fileID: 2032044017}
   - component: {fileID: 2032044016}
   - component: {fileID: 2032044015}
+  - component: {fileID: 2032044018}
   m_Layer: 0
   m_Name: Save Button
   m_TagString: Untagged
@@ -1596,3 +1610,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032044013}
   m_CullTransparentMesh: 1
+--- !u!114 &2032044018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032044013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dfed694906c5df49ab5b43b9b9ff81f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

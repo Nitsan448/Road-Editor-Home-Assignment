@@ -50,7 +50,7 @@ public class JunctionsHandler : IDataPersistence, IDisposable
 
     public void LoadData(GameData data)
     {
-        throw new NotImplementedException();
+
     }
 
     public void Dispose()

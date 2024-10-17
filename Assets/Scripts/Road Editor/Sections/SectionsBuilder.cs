@@ -80,7 +80,7 @@ public class SectionsBuilder : IDataPersistence, IDisposable
 
     public void LoadData(GameData data)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Dispose()
