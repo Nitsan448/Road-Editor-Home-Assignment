@@ -16,7 +16,6 @@ public class RoadEditUIManager : MonoBehaviour
     {
         _roadEditorManager = roadEditorManager;
         _roadCostCalculator = roadCostCalculator;
-        Ui.gameObject.SetActive(false);
         _roadCostText.Init(_roadCostCalculator);
         _deleteRoadButton.Init(_roadEditorManager);
     }

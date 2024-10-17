@@ -8,7 +8,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
-    [SerializeField] private MouseRayCaster _mouseRayCaster;
+    [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
     [SerializeField] private RoadEditUIManager _roadEditUIManager;
     private RoadCostCalculator _roadCostCalculator;
     private RoadBuilder _roadBuilder;
@@ -18,7 +18,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     public override bool Init()
     {
         _roadCostCalculator = new RoadCostCalculator();
-        _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator, _mouseRayCaster);
+        _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator);
         _roadEditUIManager.Init(this, _roadCostCalculator);
         return true;
     }
@@ -27,7 +27,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         _editing = true;
         StartedRoadEdit?.Invoke();
-        _mouseRayCaster.gameObject.SetActive(true);
+        _mouseRayCastsManager.gameObject.SetActive(true);
         _roadEditUIManager.ShowUI();
         _roadBuilder.StartBuildingRoads(_firstJunctionPosition);
     }
@@ -36,7 +36,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        _roadBuilder.UpdateNextSection();
+        _roadBuilder.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
         _roadCostCalculator.CalculateRoadCost(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
         _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -47,7 +47,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void EditRoads()
     {
-        GameObject hitGameObject = _mouseRayCaster.HitObject;
+        GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject.transform.TryGetComponent(out Junction junction))
         {
             _roadBuilder.SelectJunction(junction);

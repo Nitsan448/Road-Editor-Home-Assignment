@@ -10,16 +10,13 @@ public class RoadBuilder
     private SectionsHandler _sectionsHandler;
     private RoadBuilderDataPersistence _dataPersistence;
     private RoadCostCalculator _roadCostCalculator;
-    private MouseRayCaster _mouseRayCaster;
 
     public Vector3 NextSectionStartPoint;
     public Vector3 NextSectionEndPoint;
 
-    public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadCostCalculator roadCostCalculator,
-        MouseRayCaster mouseRayCaster)
+    public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadCostCalculator roadCostCalculator)
     {
         _roadCostCalculator = roadCostCalculator;
-        _mouseRayCaster = mouseRayCaster;
         _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
         _sectionsHandler = new SectionsHandler(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
         _dataPersistence = new RoadBuilderDataPersistence(_junctionsHandler, _sectionsHandler);
@@ -31,10 +28,10 @@ public class RoadBuilder
         _sectionsHandler.CreateNextSectionPreview();
     }
 
-    public void UpdateNextSection()
+    public void UpdateNextSection(Vector3 hitPositionOnTerrain)
     {
         NextSectionStartPoint = _junctionsHandler.SelectedJunction.transform.position;
-        NextSectionEndPoint = _mouseRayCaster.HitPositionOnTerrain;
+        NextSectionEndPoint = hitPositionOnTerrain;
         _sectionsHandler.UpdateNextSectionPoints(NextSectionStartPoint, NextSectionEndPoint);
         _sectionsHandler.UpdateNextSectionPreview();
     }
