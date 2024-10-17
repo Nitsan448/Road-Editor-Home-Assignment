@@ -48,7 +48,7 @@ public class DataPersistenceManager : MonoBehaviour
         {
             _gameData = new GameData();
         }
-        Debug.Log("Saving");
+        Debug.Log("Saving game");
         foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
         {
             dataPersistenceObject.SaveData(_gameData);
