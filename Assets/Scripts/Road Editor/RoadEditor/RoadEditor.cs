@@ -9,6 +9,7 @@ public class RoadEditor
     private JunctionsEditor _junctionsEditor;
     private SectionsEditor _sectionsEditor;
     private RoadDeleter _roadDeleter;
+    private RoadBuilder _roadBuilder;
 
     public Vector3 NextSectionStartPoint;
     public Vector3 NextSectionEndPoint;
@@ -18,6 +19,7 @@ public class RoadEditor
         _junctionsEditor = new JunctionsEditor(roadNodePrefabsReferencer.JunctionNode);
         _sectionsEditor = new SectionsEditor(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
         _roadDeleter = new RoadDeleter(_junctionsEditor, _sectionsEditor);
+        _roadBuilder = new RoadBuilder(_junctionsEditor, _sectionsEditor);
         RoadBuilderDataPersistence roadBuilderDataPersistence = new RoadBuilderDataPersistence(_junctionsEditor, _sectionsEditor);
     }
 
@@ -35,35 +37,23 @@ public class RoadEditor
         _sectionsEditor.UpdateNextSectionPreview(NextSectionStartPoint, NextSectionEndPoint);
     }
 
-    public void BuildSectionToJunction(Junction targetJunction)
-    {
-        BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, targetJunction);
-    }
-
-    public void BuildSectionBetweenJunctions(Junction startJunction, Junction endJunction)
-    {
-        Section builtSection = _sectionsEditor.BuildSection(startJunction.transform.position, endJunction.transform.position);
-        builtSection.StartJunction = startJunction;
-        startJunction.ConnectedSections.Add(builtSection);
-
-        builtSection.EndJunction = endJunction;
-        endJunction.ConnectedSections.Add(builtSection);
-    }
-
     public void BuildNewRoad()
     {
-        Junction builtJunction = _junctionsEditor.BuildJunction(NextSectionEndPoint);
-        BuildSectionToJunction(builtJunction);
-        SelectJunction(builtJunction);
+        Junction builtJunction = _roadBuilder.BuildRoad(_junctionsEditor.SelectedJunction, NextSectionEndPoint);
+        _junctionsEditor.SelectedJunction = builtJunction;
     }
 
+    public void BuildSectionToJunction(Junction targetJunction)
+    {
+        _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, targetJunction);
+    }
 
     public void SplitSection(Section section, Vector3 splitPosition)
     {
         Junction builtJunction = _junctionsEditor.BuildJunction(splitPosition);
-        BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, builtJunction);
-        BuildSectionBetweenJunctions(builtJunction, section.StartJunction);
-        BuildSectionBetweenJunctions(builtJunction, section.EndJunction);
+        _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, builtJunction);
+        _roadBuilder.BuildSectionBetweenJunctions(builtJunction, section.StartJunction);
+        _roadBuilder.BuildSectionBetweenJunctions(builtJunction, section.EndJunction);
         SelectJunction(builtJunction);
         section.Delete();
     }
