@@ -10,7 +10,7 @@ public class HighlightableObject : MonoBehaviour
     [SerializeField] private MeshRenderer _meshRenderer;
 
     private Color _defaultColor;
-    private bool _highlighted;
+    private bool _highlighted = false;
 
     private void Start()
     {

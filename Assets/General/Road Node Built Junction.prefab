@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2574370097698939201}
   - component: {fileID: 4186716633287987662}
-  - component: {fileID: 531509866394697427}
+  - component: {fileID: 2997640813550012601}
   m_Layer: 0
   m_Name: Road Node Built Junction
   m_TagString: Untagged
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 0
   ConnectedSections: []
---- !u!114 &531509866394697427
+--- !u!114 &2997640813550012601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,6 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55950d880fc769141a331f0dc5ffdbb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highlightColor: {r: 0.8018868, g: 0.13238695, b: 0.13238695, a: 1}
+  _highlightColor: {r: 0.7169812, g: 0.49546346, b: 0.18600929, a: 1}
   _highlightScaleFactor: 1.05
   _meshRenderer: {fileID: 2574370096880226978}

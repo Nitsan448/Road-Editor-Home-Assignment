@@ -47,8 +47,8 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void EditRoads()
     {
-        GameObject hitGameObject = _mouseRayCaster.FindHitObject();
-        if (hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        GameObject hitGameObject = _mouseRayCaster.HitObject;
+        if (hitGameObject.transform.TryGetComponent(out Junction junction))
         {
             _roadBuilder.SelectJunction(junction);
             return;

@@ -39,7 +39,7 @@ public class MouseRayCaster : MonoBehaviour
     public void FindHitObject()
     {
         Physics.Raycast(_ray, out RaycastHit hitData, 1000);
-        HitObject = hitData.transform.gameObject;
+        HitObject = hitData.transform.parent.gameObject;
     }
 
 }
