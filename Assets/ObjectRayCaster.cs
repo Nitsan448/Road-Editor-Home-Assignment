@@ -24,7 +24,12 @@ public class ObjectRayCaster
 
     private void FindHitObject()
     {
-        Physics.Raycast(_ray, out RaycastHit hitData, 1000);
-        HitObject = hitData.transform.parent.gameObject;
+        if (Physics.Raycast(_ray, out RaycastHit hitData, 1000))
+        {
+            HitObject = hitData.transform.gameObject;
+            return;
+        }
+
+        HitObject = null;
     }
 }
