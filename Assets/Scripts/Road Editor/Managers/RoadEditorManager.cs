@@ -18,6 +18,7 @@ public class RoadEditorManager : RoadEditorManager_Base
 
     public override bool Init()
     {
+        gameObject.SetActive(true);
         _roadCostCalculator = new RoadCostCalculator();
         _roadEditor = new RoadEditor(_roadNodePrefabsReferencer, _builtRoadsParent);
         _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);

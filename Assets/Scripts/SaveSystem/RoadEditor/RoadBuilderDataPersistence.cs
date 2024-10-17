@@ -57,7 +57,6 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
         LoadJunctionsData(loadedData);
         LoadSectionsData(loadedData);
         _junctionsEditor.SelectedJunction = _junctionsByIds[loadedData.SelectedJunctionId];
-        Debug.Log(_junctionsEditor.SelectedJunction);
     }
 
     private void LoadJunctionsData(GameData loadedData)
