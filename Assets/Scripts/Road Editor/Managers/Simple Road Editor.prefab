@@ -50,10 +50,7 @@ MonoBehaviour:
   MaxRoadDistance: 100
   MaxHeightDif: 3
   HeightCostAdd: 2
-  _roadNodePrefabsReferencer:
-    JunctionNode: {fileID: 2574370097698939200, guid: 681835012cda30c47bc155c872a77b83, type: 3}
-    BuiltNode: {fileID: 3707586549945980498, guid: 85a626bb66355e340a9bfb3953d00d18, type: 3}
-    UnderConstructionNode: {fileID: 3117202602124380665, guid: 5769a80518215fb4db19ed6d4e84f413, type: 3}
+  _roadNodePrefabsReferencer: {fileID: 11400000, guid: 3b290e0dc39847249ba125d61385e6b3, type: 2}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 7969279358261332475}
   _roadEditUIManager: {fileID: 7969279357212165430}

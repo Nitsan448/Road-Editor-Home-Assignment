@@ -610,6 +610,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7969279356422851534, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
+      propertyPath: _roadNodePrefabsReferencer
+      value: 
+      objectReference: {fileID: 11400000, guid: 17feb33fbc5d7244089c9fea918a4340, type: 2}
     - target: {fileID: 7969279357212165428, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
       propertyPath: m_Name
       value: Road Edit UI Manager

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: refactor
 public class RoadDeleter
 {
     private JunctionsEditor _junctionsEditor;
