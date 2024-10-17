@@ -11,8 +11,7 @@ public class RoadEditor
     private RoadDeleter _roadDeleter;
     private RoadBuilder _roadBuilder;
 
-    public Vector3 NextSectionStartPoint;
-    public Vector3 NextSectionEndPoint;
+    public Vector3 SelectedJunctionPosition => _junctionsEditor.SelectedJunction.transform.position;
 
     public RoadEditor(RoadNodePrefabsReferencer roadNodePrefabsReferencer)
     {
@@ -30,17 +29,15 @@ public class RoadEditor
         _sectionsEditor.CreateNextSectionPreview();
     }
 
-    public void UpdateNextSection(Vector3 hitPositionOnTerrain)
+    public void UpdateNextSectionPreview(Vector3 hitPositionOnTerrain)
     {
-        NextSectionStartPoint = _junctionsEditor.SelectedJunction.transform.position;
-        NextSectionEndPoint = hitPositionOnTerrain;
-        _sectionsEditor.UpdateNextSectionPreview(NextSectionStartPoint, NextSectionEndPoint);
+        _sectionsEditor.UpdateNextSectionPreview(_junctionsEditor.SelectedJunction.transform.position, hitPositionOnTerrain);
     }
 
-    public void BuildNewRoad()
+    public void BuildNewRoad(Vector3 endPoint)
     {
-        Junction builtJunction = _roadBuilder.BuildRoad(_junctionsEditor.SelectedJunction, NextSectionEndPoint);
-        _junctionsEditor.SelectedJunction = builtJunction;
+        Junction builtJunction = _roadBuilder.BuildRoad(_junctionsEditor.SelectedJunction, endPoint);
+        SelectJunction(builtJunction);
     }
 
     public void BuildSectionToJunction(Junction targetJunction)

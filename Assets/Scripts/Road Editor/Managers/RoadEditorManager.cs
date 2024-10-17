@@ -38,8 +38,8 @@ public class RoadEditorManager : RoadEditorManager_Base
     {
         if (!_editing) return;
 
-        _roadEditor.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
-        _roadCostCalculator.CalculateRoadCost(_roadEditor.NextSectionStartPoint, _roadEditor.NextSectionEndPoint);
+        _roadEditor.UpdateNextSectionPreview(_mouseRayCastsManager.HitPositionOnTerrain);
+        _roadCostCalculator.CalculateRoadCost(_roadEditor.SelectedJunctionPosition, _mouseRayCastsManager.HitPositionOnTerrain);
         _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
         _roadEditorInputHandler.ReactToInput();
     }

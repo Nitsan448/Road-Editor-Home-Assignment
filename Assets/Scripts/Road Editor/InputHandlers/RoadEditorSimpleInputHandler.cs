@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
 {
-
-
     public override void ReactToInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -29,11 +27,6 @@ public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
     private void BuildRoadIfPossible()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        RoadEditor.BuildNewRoad();
-    }
-
-    public void DeleteSelectedRoad()
-    {
-        RoadEditor.DeleteSelectedRoad();
+        RoadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
     }
 }

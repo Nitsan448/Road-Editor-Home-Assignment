@@ -31,7 +31,7 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         }
         else
         {
-            RoadEditor.BuildNewRoad();
+            RoadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
         }
     }
 
