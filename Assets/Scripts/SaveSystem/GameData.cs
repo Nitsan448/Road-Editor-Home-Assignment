@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public int DeathCount;
+    public List<SectionPersistentData> Sections;
 
     public GameData()
     {
-        DeathCount = 0;
+        Sections = new List<SectionPersistentData>();
     }
 }

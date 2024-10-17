@@ -19,12 +19,12 @@ public class DataSaveTest : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        data.DeathCount = _deathCount;
+        // data.DeathCount = _deathCount;
     }
 
     public void LoadData(GameData data)
     {
-        _deathCount = data.DeathCount;
+        // _deathCount = data.DeathCount;
     }
 
 }

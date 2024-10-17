@@ -31,8 +31,8 @@ public class DataPersistenceManager : MonoBehaviour
     {
         _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
         NewGame();
-        SaveGame();
-        LoadGame();
+        Invoke("SaveGame", 3f);
+        // LoadGame();
     }
 
     public void Register(IDataPersistence dataPersistenceObject)
@@ -53,6 +53,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        Debug.Log("Saving");
         foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
         {
             dataPersistenceObject.SaveData(_gameData);

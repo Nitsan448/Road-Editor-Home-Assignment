@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class SectionsBuilder
+public class SectionsBuilder : IDataPersistence, IDisposable
 {
     private GameObject _underConstructionNodePrefab;
     private GameObject _builtNodePrefab;
@@ -11,10 +13,13 @@ public class SectionsBuilder
     private Vector3 _nextSectionStartPoint;
     private Vector3 _nextSectionEndPoint;
 
+    private List<Section> _sections = new List<Section>();
+
     public SectionsBuilder(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
+        DataPersistenceManager.Instance.Register(this);
     }
 
     public void CreateNextSectionPreview()
@@ -57,8 +62,29 @@ public class SectionsBuilder
 
     public Section BuildSection()
     {
-        GameObject builtSection = Object.Instantiate(_builtNodePrefab);
-        SetNodeTransform(builtSection.transform);
-        return builtSection.GetComponent<Section>();
+        GameObject createdObject = Object.Instantiate(_builtNodePrefab);
+        SetNodeTransform(createdObject.transform);
+        Section builtSection = createdObject.GetComponent<Section>();
+        _sections.Add(builtSection);
+        return builtSection;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.Sections.Clear();
+        foreach (Section section in _sections)
+        {
+            data.Sections.Add(section.GetSectionPersistentData());
+        }
+    }
+
+    public void LoadData(GameData data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Dispose()
+    {
+        DataPersistenceManager.Instance.Unregister(this);
     }
 }

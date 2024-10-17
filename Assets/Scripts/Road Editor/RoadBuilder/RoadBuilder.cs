@@ -38,8 +38,10 @@ public class RoadBuilder
     public void BuildRoad()
     {
         Section builtSection = _sectionsBuilder.BuildSection();
-        _junctionsHandler.SelectedJunction.OutwardSections.Add(builtSection);
+        builtSection.StartJunction = _junctionsHandler.SelectedJunction;
+        _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection);
         _junctionsHandler.BuildJunction(NextSectionEndPoint);
+        builtSection.EndJunction = _junctionsHandler.SelectedJunction;
     }
 
     public void SelectJunction(Junction junction)

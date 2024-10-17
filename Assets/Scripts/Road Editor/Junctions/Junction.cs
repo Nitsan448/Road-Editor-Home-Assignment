@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-    public List<Section> OutwardSections = new List<Section>();
+    public int JunctionID;
+    public List<Section> ConnectedSections = new List<Section>();
 }
