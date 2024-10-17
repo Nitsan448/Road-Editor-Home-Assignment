@@ -28,34 +28,34 @@ public class SectionsEditor
 
     public void UpdateNextSectionPreview(Vector3 startPoint, Vector3 endPoint)
     {
-        SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
+        SetSectionTransformValues(_sectionPreviewNode.transform, startPoint, endPoint);
     }
 
 
-    private void SetNodeTransform(Transform node, Vector3 startPoint, Vector3 endPoint)
+    private void SetSectionTransformValues(Transform sectionTransform, Vector3 startPoint, Vector3 endPoint)
     {
-        node.transform.position = startPoint;
-        SetNodeLength(node, startPoint, endPoint);
-        SetNodeRotation(node, startPoint, endPoint);
+        sectionTransform.position = startPoint;
+        SetNodeLength(sectionTransform, startPoint, endPoint);
+        SetNodeRotation(sectionTransform, startPoint, endPoint);
     }
 
-    private void SetNodeLength(Transform node, Vector3 startPoint, Vector3 endPoint)
+    private void SetNodeLength(Transform sectionTransform, Vector3 startPoint, Vector3 endPoint)
     {
         float length = Vector3.Distance(startPoint, endPoint);
-        node.localScale = new Vector3(node.localScale.x, node.localScale.y, length);
+        sectionTransform.localScale = new Vector3(sectionTransform.localScale.x, sectionTransform.localScale.y, length);
     }
 
-    private void SetNodeRotation(Transform node, Vector3 startPoint, Vector3 endPoint)
+    private void SetNodeRotation(Transform sectionTransform, Vector3 startPoint, Vector3 endPoint)
     {
         Vector3 direction = endPoint - startPoint;
         if (direction.magnitude <= Mathf.Epsilon) return;
-        node.rotation = Quaternion.LookRotation(direction);
+        sectionTransform.rotation = Quaternion.LookRotation(direction);
     }
 
     public Section BuildSection(Vector3 startPoint, Vector3 endPoint)
     {
         GameObject createdObject = Object.Instantiate(_builtNodePrefab);
-        SetNodeTransform(createdObject.transform, startPoint, endPoint);
+        SetSectionTransformValues(createdObject.transform, startPoint, endPoint);
         Section builtSection = createdObject.GetComponent<Section>();
         Sections.Add(builtSection);
         builtSection.name = "Section " + (Sections.Count + 1);
