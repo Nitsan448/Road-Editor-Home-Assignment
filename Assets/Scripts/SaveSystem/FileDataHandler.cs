@@ -35,6 +35,11 @@ public class FileDataHandler
         }
     }
 
+    private string GetFullDataFilePath()
+    {
+        return Path.Combine(_saveFileDirectoryPath, _saveFileName);
+    }
+
     private GameData LoadData(string fullPath)
     {
         string dataToLoad = "";
@@ -47,21 +52,12 @@ public class FileDataHandler
         return JsonUtility.FromJson<GameData>(dataToLoad);
     }
 
-
-    public void Save(GameData data)
+    public void TrySavingData(GameData data)
     {
         string fullPath = GetFullDataFilePath();
         try
         {
-            //TODO: understand why not use directory path
-            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-
-            string dataToStore = JsonUtility.ToJson(data, true);
-
-            using (StreamWriter writer = new StreamWriter(fullPath))
-            {
-                writer.Write(dataToStore);
-            }
+            SaveData(data, fullPath);
         }
         catch (Exception e)
         {
@@ -69,8 +65,15 @@ public class FileDataHandler
         }
     }
 
-    private string GetFullDataFilePath()
+    private void SaveData(GameData data, string fullPath)
     {
-        return Path.Combine(_saveFileDirectoryPath, _saveFileName);
+        Directory.CreateDirectory(_saveFileDirectoryPath);
+
+        string dataToStore = JsonUtility.ToJson(data, true);
+
+        using (StreamWriter writer = new StreamWriter(fullPath))
+        {
+            writer.Write(dataToStore);
+        }
     }
 }
