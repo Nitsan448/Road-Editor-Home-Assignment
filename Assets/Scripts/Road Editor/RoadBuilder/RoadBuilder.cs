@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class RoadBuilder
 {
@@ -59,5 +60,10 @@ public class RoadBuilder
 
     private void DeleteRoad(Junction junctionToDelete)
     {
+        foreach (Section section in junctionToDelete.ConnectedSections)
+        {
+            Object.Destroy(section.gameObject);
+        }
+        Object.Destroy(junctionToDelete);
     }
 }

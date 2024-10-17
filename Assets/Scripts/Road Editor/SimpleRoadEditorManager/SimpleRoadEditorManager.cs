@@ -59,7 +59,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void BuildRoadIfPossible()
     {
-        if (!_roadCostCalculator.IsRoadValid) return;
+        if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
         _roadBuilder.BuildRoad();
     }
 
