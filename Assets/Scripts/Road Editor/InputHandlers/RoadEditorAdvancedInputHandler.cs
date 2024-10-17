@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadEditorAdvancedInputHandler : ARoadEditorManagerInputHandler
+public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
 {
     public override void ReactToInput()
     {
@@ -21,7 +21,7 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorManagerInputHandler
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            _roadEditor.SelectJunction(junction);
+            RoadEditor.SelectJunction(junction);
         }
     }
 
@@ -31,15 +31,15 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorManagerInputHandler
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            _roadEditor.BuildSectionToJunction(junction);
+            RoadEditor.BuildSectionToJunction(junction);
         }
         else if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Section section))
         {
-            _roadEditor.SplitSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
+            RoadEditor.SplitSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
         }
         else
         {
-            _roadEditor.BuildNewRoad();
+            RoadEditor.BuildNewRoad();
         }
     }
 }

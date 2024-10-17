@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ARoadEditorManagerInputHandler : MonoBehaviour
+public abstract class ARoadEditorInputHandler : MonoBehaviour
 {
     protected MouseRayCastsManager _mouseRayCastsManager;
-    protected RoadEditor _roadEditor;
+    protected RoadEditor RoadEditor;
     protected RoadCostCalculator _roadCostCalculator;
 
     public void Init(MouseRayCastsManager mouseRayCastsManager, RoadEditor roadEditor, RoadCostCalculator roadCostCalculator)
     {
         _mouseRayCastsManager = mouseRayCastsManager;
-        _roadEditor = roadEditor;
+        RoadEditor = roadEditor;
         _roadCostCalculator = roadCostCalculator;
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadEditorManagerSimpleInputHandler : ARoadEditorManagerInputHandler
+public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
 {
 
 
@@ -19,7 +19,7 @@ public class RoadEditorManagerSimpleInputHandler : ARoadEditorManagerInputHandle
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            _roadEditor.SelectJunction(junction);
+            RoadEditor.SelectJunction(junction);
             return;
         }
 
@@ -29,11 +29,11 @@ public class RoadEditorManagerSimpleInputHandler : ARoadEditorManagerInputHandle
     private void BuildRoadIfPossible()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        _roadEditor.BuildNewRoad();
+        RoadEditor.BuildNewRoad();
     }
 
     public void DeleteSelectedRoad()
     {
-        _roadEditor.DeleteSelectedRoad();
+        RoadEditor.DeleteSelectedRoad();
     }
 }

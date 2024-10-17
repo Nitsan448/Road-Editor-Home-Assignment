@@ -365,7 +365,7 @@ MonoBehaviour:
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 2122984070}
   _roadEditUIManager: {fileID: 1039345227}
-  _roadEditorManagerInputHandler: {fileID: 594638478}
+  _roadEditorInputHandler: {fileID: 594638478}
 --- !u!1 &226602698
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 594638477}
   - component: {fileID: 594638478}
   m_Layer: 0
-  m_Name: Road Editor Manager Simple Input Handler
+  m_Name: Road Editor Simple Input Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1086,7 +1086,7 @@ MonoBehaviour:
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 2122984070}
   _roadEditUIManager: {fileID: 1039345227}
-  _roadEditorManagerInputHandler: {fileID: 1192850299}
+  _roadEditorInputHandler: {fileID: 1192850299}
 --- !u!4 &1102362674
 Transform:
   m_ObjectHideFlags: 0
@@ -1112,7 +1112,7 @@ GameObject:
   - component: {fileID: 1192850298}
   - component: {fileID: 1192850299}
   m_Layer: 0
-  m_Name: RoadEditorAdvancedInputManager
+  m_Name: Road Editor Advanced Input Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,15 +1,14 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class SimpleRoadEditorManager : RoadEditorManager_Base
+public class RoadEditorManager : RoadEditorManager_Base
 {
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
     [SerializeField] private RoadEditUIManager _roadEditUIManager;
+    [SerializeField] private ARoadEditorInputHandler _roadEditorInputHandler;
     private RoadCostCalculator _roadCostCalculator;
     private RoadEditor _roadEditor;
     private bool _editing = false;
@@ -20,6 +19,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _roadCostCalculator = new RoadCostCalculator();
         _roadEditor = new RoadEditor(_roadNodePrefabsReferencer, _roadCostCalculator);
         _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);
+        _roadEditorInputHandler.Init(_mouseRayCastsManager, _roadEditor, _roadCostCalculator);
         return true;
     }
 
@@ -39,28 +39,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _roadEditor.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
         _roadCostCalculator.CalculateRoadCost(_roadEditor.NextSectionStartPoint, _roadEditor.NextSectionEndPoint);
         _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            EditRoads();
-        }
-    }
-
-    private void EditRoads()
-    {
-        GameObject hitGameObject = _mouseRayCastsManager.HitObject;
-        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
-        {
-            _roadEditor.SelectJunction(junction);
-            return;
-        }
-
-        BuildRoadIfPossible();
-    }
-
-    private void BuildRoadIfPossible()
-    {
-        if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        _roadEditor.BuildNewRoad();
+        _roadEditorInputHandler.ReactToInput();
     }
 
     public override void DeleteSelectedRoad()
