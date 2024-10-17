@@ -10,13 +10,15 @@ public class RoadEditor
     private SectionsEditor _sectionsEditor;
     private RoadDeleter _roadDeleter;
     private RoadBuilder _roadBuilder;
+    private Transform _builtRoadsParent;
 
     public Vector3 SelectedJunctionPosition => _junctionsEditor.SelectedJunction.transform.position;
 
-    public RoadEditor(RoadNodePrefabsReferencer roadNodePrefabsReferencer)
+    public RoadEditor(RoadNodePrefabsReferencer roadNodePrefabsReferencer, Transform builtRoadsParent)
     {
-        _junctionsEditor = new JunctionsEditor(roadNodePrefabsReferencer.JunctionNode);
-        _sectionsEditor = new SectionsEditor(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
+        _junctionsEditor = new JunctionsEditor(roadNodePrefabsReferencer.JunctionNode, builtRoadsParent);
+        _sectionsEditor = new SectionsEditor(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode,
+            builtRoadsParent);
         _roadDeleter = new RoadDeleter(_junctionsEditor, _sectionsEditor);
         _roadBuilder = new RoadBuilder(_junctionsEditor, _sectionsEditor);
         RoadBuilderDataPersistence roadBuilderDataPersistence = new RoadBuilderDataPersistence(_junctionsEditor, _sectionsEditor);

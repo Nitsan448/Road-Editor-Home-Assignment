@@ -11,6 +11,7 @@ public class RoadEditorManager : RoadEditorManager_Base
     [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
     [SerializeField] private RoadEditUIManager _roadEditUIManager;
     [SerializeField] private ARoadEditorInputHandler _roadEditorInputHandler;
+    [SerializeField] private Transform _builtRoadsParent;
     private RoadCostCalculator _roadCostCalculator;
     private RoadEditor _roadEditor;
     private bool _editing = false;
@@ -19,7 +20,7 @@ public class RoadEditorManager : RoadEditorManager_Base
     public override bool Init()
     {
         _roadCostCalculator = new RoadCostCalculator();
-        _roadEditor = new RoadEditor(_roadNodePrefabsReferencer);
+        _roadEditor = new RoadEditor(_roadNodePrefabsReferencer, _builtRoadsParent);
         _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);
         _roadEditorInputHandler.Init(_mouseRayCastsManager, _roadEditor, _roadCostCalculator);
         return true;

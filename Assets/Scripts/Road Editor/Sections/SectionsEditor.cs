@@ -11,17 +11,19 @@ public class SectionsEditor
     private GameObject _underConstructionNodePrefab;
     private GameObject _builtNodePrefab;
     private GameObject _sectionPreviewNode;
+    private Transform _builtRoadsParent;
 
 
-    public SectionsEditor(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
+    public SectionsEditor(GameObject underConstructionNodePrefab, GameObject builtNodePrefab, Transform builtRoadsParent)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
+        _builtRoadsParent = builtRoadsParent;
     }
 
     public void CreateNextSectionPreview()
     {
-        _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
+        _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab, _builtRoadsParent, true);
     }
 
     public void UpdateNextSectionPreview(Vector3 startPoint, Vector3 endPoint)
@@ -56,6 +58,8 @@ public class SectionsEditor
         SetNodeTransform(createdObject.transform, startPoint, endPoint);
         Section builtSection = createdObject.GetComponent<Section>();
         Sections.Add(builtSection);
+        builtSection.name = "Section " + (Sections.Count + 1);
+        builtSection.transform.parent = _builtRoadsParent;
         return builtSection;
     }
 

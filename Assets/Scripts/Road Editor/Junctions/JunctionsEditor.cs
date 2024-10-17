@@ -10,11 +10,13 @@ public class JunctionsEditor
 
     private GameObject _junctionNodePrefab;
     private int _lastBuiltJunctionId = 0;
+    private Transform _builtRoadsParent;
 
     public List<Junction> Junctions { get; private set; } = new List<Junction>();
 
-    public JunctionsEditor(GameObject junctionNodePrefab)
+    public JunctionsEditor(GameObject junctionNodePrefab, Transform builtRoadsParent)
     {
+        _builtRoadsParent = builtRoadsParent;
         _junctionNodePrefab = junctionNodePrefab;
     }
 
@@ -26,6 +28,8 @@ public class JunctionsEditor
 
         builtJunction.Id = _lastBuiltJunctionId;
         _lastBuiltJunctionId++;
+        builtJunction.name = "Junction " + builtJunction.Id;
+        builtJunction.transform.parent = _builtRoadsParent;
         Junctions.Add(builtJunction);
 
         return builtJunction;
