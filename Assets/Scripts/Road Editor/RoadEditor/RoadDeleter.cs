@@ -21,8 +21,8 @@ public class RoadDeleter
 
         DeleteConnectedSections(junctionToDelete);
         _junctionsEditor.DeleteJunction(junctionToDelete);
-        Junction notDeletedJunction = DeleteEmptyJunctions(connectedJunctions);
-        _junctionsEditor.SelectedJunction = notDeletedJunction != null ? notDeletedJunction : _junctionsEditor.Junctions[0];
+        Junction remainingJunction = DeleteEmptyJunctions(connectedJunctions);
+        _junctionsEditor.SelectedJunction = remainingJunction != null ? remainingJunction : _junctionsEditor.Junctions[0];
     }
 
     private void DeleteConnectedSections(Junction junction)
@@ -36,19 +36,19 @@ public class RoadDeleter
 
     private Junction DeleteEmptyJunctions(List<Junction> junctions)
     {
-        Junction notDeletedJunction = null;
+        Junction remainingJunction = null;
         foreach (Junction junction in junctions)
         {
             bool isLastJunction = _junctionsEditor.GetNumberOfJunctions() == 1;
-            if (junction.ConnectedSections.Count == 0 && !isLastJunction)
+            if (junction.IsEmpty() && !isLastJunction)
             {
                 _junctionsEditor.DeleteJunction(junction);
             }
             else
             {
-                notDeletedJunction = junction;
+                remainingJunction = junction;
             }
         }
-        return notDeletedJunction;
+        return remainingJunction;
     }
 }

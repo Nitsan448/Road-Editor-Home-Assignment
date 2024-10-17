@@ -29,4 +29,9 @@ public class Junction : MonoBehaviour
 
         return connectedJunctions;
     }
+
+    public bool IsEmpty()
+    {
+        return ConnectedSections.Count == 0;
+    }
 }
