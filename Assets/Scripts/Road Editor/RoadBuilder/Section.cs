@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class Section : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class Section : MonoBehaviour
     public SectionPersistentData GetSectionPersistentData()
     {
         return new SectionPersistentData(StartJunction.Id, EndJunction.Id);
+    }
 
+    private void OnDestroy()
+    {
+        StartJunction.ConnectedSections.Remove(this);
+        EndJunction.ConnectedSections.Remove(this);
     }
 }

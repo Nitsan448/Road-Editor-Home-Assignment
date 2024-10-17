@@ -66,18 +66,27 @@ public class RoadBuilder
         if (connectedJunctions.Count == 0) return;
 
         _junctionsHandler.SelectedJunction = connectedJunctions[0];
-        foreach (Section section in junctionToDelete.ConnectedSections)
+        DeleteConnectedSections(junctionToDelete);
+        DeleteEmptyJunctions(connectedJunctions);
+        Object.Destroy(junctionToDelete.gameObject);
+    }
+
+    private void DeleteConnectedSections(Junction junction)
+    {
+        foreach (Section section in junction.ConnectedSections)
         {
-            foreach (Junction junction in connectedJunctions)
-            {
-                junction.ConnectedSections.Remove(section);
-                if (junction.ConnectedSections.Count == 0)
-                {
-                    Object.Destroy(junction.gameObject);
-                }
-            }
             Object.Destroy(section.gameObject);
         }
-        Object.Destroy(junctionToDelete.gameObject);
+    }
+
+    private void DeleteEmptyJunctions(List<Junction> junctions)
+    {
+        foreach (Junction junction in junctions)
+        {
+            if (junction.ConnectedSections.Count == 0)
+            {
+                Object.Destroy(junction.gameObject);
+            }
+        }
     }
 }
