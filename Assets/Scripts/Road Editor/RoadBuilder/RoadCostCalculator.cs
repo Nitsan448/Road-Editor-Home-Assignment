@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadCostCalculator : MonoBehaviour
+public class RoadCostCalculator
 {
     public float HeightDifference { get; private set; }
     public float CurrentRoadCost { get; private set; }

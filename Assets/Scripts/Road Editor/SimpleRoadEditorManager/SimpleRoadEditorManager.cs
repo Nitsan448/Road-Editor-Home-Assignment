@@ -9,16 +9,17 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private MouseRayCaster _mouseRayCaster;
-    [SerializeField] private RoadCostCalculator _roadCostCalculator;
+    [SerializeField] private RoadEditUIManager _roadEditUIManager;
+    private RoadCostCalculator _roadCostCalculator;
     private RoadBuilder _roadBuilder;
     private bool _editing = false;
-
-    public float CurrentRoadCost => _roadCostCalculator.CurrentRoadCost;
 
 
     public override bool Init()
     {
+        _roadCostCalculator = new RoadCostCalculator();
         _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator, _mouseRayCaster);
+        _roadEditUIManager.Init(this, _roadCostCalculator);
         return true;
     }
 
@@ -27,6 +28,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _editing = true;
         StartedRoadEdit?.Invoke();
         _mouseRayCaster.gameObject.SetActive(true);
+        _roadEditUIManager.ShowUI();
         _roadBuilder.StartBuildingRoads(_firstJunctionPosition);
     }
 

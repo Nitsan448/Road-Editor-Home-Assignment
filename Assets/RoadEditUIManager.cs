@@ -3,31 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadEditUI : MonoBehaviour
+public class RoadEditUIManager : MonoBehaviour
 {
-    [SerializeField] private RoadEditorManager_Base _roadEditorManager;
+    private RoadEditorManager_Base _roadEditorManager;
     [SerializeField] private RoadCostText _roadCostText;
     [SerializeField] private RoadCostCalculator _roadCostCalculator;
 
     [SerializeField] private GameObject Ui;
 
-    private void Start()
+    public void Init(RoadEditorManager_Base roadEditorManager, RoadCostCalculator roadCostCalculator)
     {
+        _roadEditorManager = roadEditorManager;
+        _roadCostCalculator = roadCostCalculator;
         Ui.gameObject.SetActive(false);
         _roadCostText.Init(_roadCostCalculator);
+        Ui.gameObject.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        _roadEditorManager.StartedRoadEdit += ShowUI;
-    }
-
-    private void OnDisable()
-    {
-        _roadEditorManager.StartedRoadEdit -= ShowUI;
-    }
-
-    private void ShowUI()
+    public void ShowUI()
     {
         Ui.gameObject.SetActive(true);
     }
