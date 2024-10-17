@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 {
-    private JunctionsHandler _junctionsHandler;
-    private SectionsHandler _sectionsHandler;
+    private JunctionsEditor _junctionsEditor;
+    private SectionsEditor _sectionsEditor;
     private Dictionary<int, Junction> _junctionsByIds = new Dictionary<int, Junction>();
 
-    public RoadBuilderDataPersistence(JunctionsHandler junctionsHandler, SectionsHandler sectionsHandler)
+    public RoadBuilderDataPersistence(JunctionsEditor junctionsEditor, SectionsEditor sectionsEditor)
     {
-        _junctionsHandler = junctionsHandler;
-        _sectionsHandler = sectionsHandler;
+        _junctionsEditor = junctionsEditor;
+        _sectionsEditor = sectionsEditor;
         DataPersistenceManager.Instance.Register(this);
     }
 
@@ -30,13 +30,13 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
     private void SaveJunctionsData(GameData data)
     {
         data.Junctions.Clear();
-        foreach (Junction junction in _junctionsHandler.Junctions)
+        foreach (Junction junction in _junctionsEditor.Junctions)
         {
             data.Junctions.Add(junction.GetJunctionPersistentData());
 
             //TODO: Fix this
             //TODO: check if this was fixed
-            if (_junctionsHandler.SelectedJunction == junction)
+            if (_junctionsEditor.SelectedJunction == junction)
             {
                 data.SelectedJunctionId = junction.Id;
             }
@@ -46,7 +46,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
     private void SaveSectionsData(GameData data)
     {
         data.Sections.Clear();
-        foreach (Section section in _sectionsHandler.Sections)
+        foreach (Section section in _sectionsEditor.Sections)
         {
             data.Sections.Add(section.GetSectionPersistentData());
         }
@@ -56,18 +56,18 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
     {
         LoadJunctionsData(loadedData);
         LoadSectionsData(loadedData);
-        _junctionsHandler.SelectedJunction = _junctionsByIds[loadedData.SelectedJunctionId];
+        _junctionsEditor.SelectedJunction = _junctionsByIds[loadedData.SelectedJunctionId];
     }
 
     private void LoadJunctionsData(GameData loadedData)
     {
-        foreach (Junction junction in _junctionsHandler.Junctions)
+        foreach (Junction junction in _junctionsEditor.Junctions)
         {
-            _junctionsHandler.DeleteJunction(junction);
+            _junctionsEditor.DeleteJunction(junction);
         }
         foreach (JunctionPersistentData junctionData in loadedData.Junctions)
         {
-            Junction builtJunction = _junctionsHandler.BuildJunction(junctionData.Position);
+            Junction builtJunction = _junctionsEditor.BuildJunction(junctionData.Position);
             builtJunction.Id = junctionData.Id;
             _junctionsByIds[junctionData.Id] = builtJunction;
         }
@@ -75,16 +75,16 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 
     private void LoadSectionsData(GameData loadedData)
     {
-        foreach (Section section in _sectionsHandler.Sections)
+        foreach (Section section in _sectionsEditor.Sections)
         {
-            _sectionsHandler.DeleteSection(section);
+            _sectionsEditor.DeleteSection(section);
         }
         foreach (SectionPersistentData sectionData in loadedData.Sections)
         {
             Junction startJunction = _junctionsByIds[sectionData.StartJunctionId];
             Junction endJunction = _junctionsByIds[sectionData.EndJunctionId];
-            _sectionsHandler.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
-            Section builtSection = _sectionsHandler.BuildSection();
+            _sectionsEditor.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
+            Section builtSection = _sectionsEditor.BuildSection();
             builtSection.StartJunction = startJunction;
             builtSection.EndJunction = endJunction;
             startJunction.ConnectedSections.Add(builtSection);

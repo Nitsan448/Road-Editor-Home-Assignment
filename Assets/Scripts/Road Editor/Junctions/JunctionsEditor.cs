@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class JunctionsHandler
+public class JunctionsEditor
 {
     public Junction SelectedJunction;
 
@@ -13,7 +13,7 @@ public class JunctionsHandler
 
     public List<Junction> Junctions { get; private set; } = new List<Junction>();
 
-    public JunctionsHandler(GameObject junctionNodePrefab)
+    public JunctionsEditor(GameObject junctionNodePrefab)
     {
         _junctionNodePrefab = junctionNodePrefab;
     }
@@ -36,6 +36,11 @@ public class JunctionsHandler
     {
         Junctions.Remove(junction);
         Object.Destroy(junction.gameObject);
+    }
+
+    public int GetNumberOfJunctions()
+    {
+        return Junctions.Count;
     }
 
 }

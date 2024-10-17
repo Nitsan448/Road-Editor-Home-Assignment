@@ -11,14 +11,14 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
     [SerializeField] private RoadEditUIManager _roadEditUIManager;
     private RoadCostCalculator _roadCostCalculator;
-    private RoadBuilder _roadBuilder;
+    private RoadEditor _roadEditor;
     private bool _editing = false;
 
 
     public override bool Init()
     {
         _roadCostCalculator = new RoadCostCalculator();
-        _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator);
+        _roadEditor = new RoadEditor(_roadNodePrefabsReferencer, _roadCostCalculator);
         _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);
         return true;
     }
@@ -29,15 +29,15 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         StartedRoadEdit?.Invoke();
         _mouseRayCastsManager.gameObject.SetActive(true);
         _roadEditUIManager.ShowUI();
-        _roadBuilder.StartBuildingRoads(_firstJunctionPosition);
+        _roadEditor.StartBuildingRoads(_firstJunctionPosition);
     }
 
     private void Update()
     {
         if (!_editing) return;
 
-        _roadBuilder.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
-        _roadCostCalculator.CalculateRoadCost(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
+        _roadEditor.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
+        _roadCostCalculator.CalculateRoadCost(_roadEditor.NextSectionStartPoint, _roadEditor.NextSectionEndPoint);
         _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -50,7 +50,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject.transform.TryGetComponent(out Junction junction))
         {
-            _roadBuilder.SelectJunction(junction);
+            _roadEditor.SelectJunction(junction);
             return;
         }
 
@@ -60,11 +60,11 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     private void BuildRoadIfPossible()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        _roadBuilder.BuildRoad();
+        _roadEditor.BuildRoad();
     }
 
     public override void DeleteSelectedRoad()
     {
-        _roadBuilder.DeleteSelectedRoad();
+        _roadEditor.DeleteSelectedRoad();
     }
 }
