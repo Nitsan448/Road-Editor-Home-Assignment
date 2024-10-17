@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadBuilder : IDataPersistence, IDisposable
+public class RoadBuilder
 {
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
+    private RoadBuilderDataPersistence _dataPersistence;
     private RoadValidityCalculator _roadValidityCalculator;
     private MouseRayCaster _mouseRayCaster;
 
@@ -20,7 +21,7 @@ public class RoadBuilder : IDataPersistence, IDisposable
         _mouseRayCaster = mouseRayCaster;
         _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
-        DataPersistenceManager.Instance.Register(this);
+        _dataPersistence = new RoadBuilderDataPersistence(_junctionsHandler, _sectionsBuilder);
     }
 
     public void StartBuildingRoads(Vector3 firstJunctionPosition)
@@ -49,79 +50,5 @@ public class RoadBuilder : IDataPersistence, IDisposable
     public void SelectJunction(Junction junction)
     {
         _junctionsHandler.SelectedJunction = junction;
-    }
-
-    public void Dispose()
-    {
-        DataPersistenceManager.Instance.Unregister(this);
-    }
-
-    public void SaveData(GameData dataToSave)
-    {
-        SaveJunctionsData(dataToSave);
-        SaveSectionsData(dataToSave);
-    }
-
-    private void SaveJunctionsData(GameData data)
-    {
-        data.Junctions.Clear();
-        foreach (Junction junction in _junctionsHandler.Junctions)
-        {
-            data.Junctions.Add(junction.GetJunctionPersistentData());
-            if (_junctionsHandler.SelectedJunction == junction)
-            {
-                data.SelectedJunctionId = junction.Id;
-            }
-        }
-    }
-
-    private void SaveSectionsData(GameData data)
-    {
-        data.Sections.Clear();
-        foreach (Section section in _sectionsBuilder.Sections)
-        {
-            data.Sections.Add(section.GetSectionPersistentData());
-        }
-    }
-
-    public void LoadData(GameData loadedData)
-    {
-        Dictionary<int, Junction> junctionsByIds = LoadJunctionsData(loadedData);
-        LoadSectionsData(loadedData, junctionsByIds);
-    }
-
-    private Dictionary<int, Junction> LoadJunctionsData(GameData loadedData)
-    {
-        Dictionary<int, Junction> junctionsByIds = new Dictionary<int, Junction>();
-        foreach (Junction junction in _junctionsHandler.Junctions)
-        {
-            _junctionsHandler.DeleteJunction(junction);
-        }
-        foreach (JunctionPersistentData junctionData in loadedData.Junctions)
-        {
-            Junction builtJunction = _junctionsHandler.BuildJunction(junctionData.Position);
-            builtJunction.Id = junctionData.Id;
-            junctionsByIds[junctionData.Id] = builtJunction;
-        }
-        return junctionsByIds;
-    }
-
-    private void LoadSectionsData(GameData loadedData, Dictionary<int, Junction> junctionsByIds)
-    {
-        foreach (Section section in _sectionsBuilder.Sections)
-        {
-            _sectionsBuilder.DeleteSection(section);
-        }
-        foreach (SectionPersistentData sectionData in loadedData.Sections)
-        {
-            Junction startJunction = junctionsByIds[sectionData.StartJunctionId];
-            Junction endJunction = junctionsByIds[sectionData.EndJunctionId];
-            _sectionsBuilder.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
-            Section builtSection = _sectionsBuilder.BuildSection();
-            builtSection.StartJunction = startJunction;
-            builtSection.EndJunction = endJunction;
-            startJunction.ConnectedSections.Add(builtSection);
-            endJunction.ConnectedSections.Add(builtSection);
-        }
     }
 }
