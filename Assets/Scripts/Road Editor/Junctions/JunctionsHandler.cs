@@ -50,7 +50,11 @@ public class JunctionsHandler : IDataPersistence, IDisposable
 
     public void LoadData(GameData data)
     {
-
+        foreach (JunctionPersistentData junctionData in data.Junctions)
+        {
+            BuildJunction(junctionData.Position);
+            SelectedJunction.Id = junctionData.Id;
+        }
     }
 
     public void Dispose()
