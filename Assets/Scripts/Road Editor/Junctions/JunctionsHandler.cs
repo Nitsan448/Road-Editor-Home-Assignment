@@ -41,6 +41,10 @@ public class JunctionsHandler : IDataPersistence, IDisposable
         foreach (Junction junction in _junctions)
         {
             data.Junctions.Add(junction.GetJunctionPersistentData());
+            if (SelectedJunction == junction)
+            {
+                data.SelectedJunctionId = junction.Id;
+            }
         }
     }
 

@@ -59,6 +59,8 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObject.SaveData(_gameData);
         }
 
+        //TODO: extract from here
+        _gameData.CameraPosition = Camera.main.transform.position;
         _fileDataHandler.Save(_gameData);
     }
 
@@ -73,5 +75,8 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObject.LoadData(_gameData);
         }
+
+        //TODO: extract from here
+        Camera.main.transform.position = _gameData.CameraPosition;
     }
 }
