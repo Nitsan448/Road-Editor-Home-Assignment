@@ -44,6 +44,7 @@ public class RoadBuilder
         Section builtSection = _sectionsBuilder.BuildSection();
         builtSection.StartJunction = _junctionsHandler.SelectedJunction;
         _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection);
+
         Junction builtJunction = _junctionsHandler.BuildJunction(NextSectionEndPoint);
         builtSection.EndJunction = builtJunction;
         builtJunction.ConnectedSections.Add(builtSection);
@@ -61,7 +62,10 @@ public class RoadBuilder
 
     private void DeleteRoad(Junction junctionToDelete)
     {
-        _junctionsHandler.SelectedJunction = junctionToDelete.GetConnectedJunction();
+        Junction connectedJunction = junctionToDelete.GetConnectedJunction();
+        if (connectedJunction == null) return;
+
+        _junctionsHandler.SelectedJunction = connectedJunction;
         foreach (Section section in junctionToDelete.ConnectedSections)
         {
             Object.Destroy(section.gameObject);
