@@ -54,14 +54,12 @@ public class DataPersistenceManager : MonoBehaviour
             dataPersistenceObject.SaveData(_gameData);
         }
 
-        //TODO: extract from here
-        _gameData.CameraPosition = Camera.main.transform.position;
         _fileDataHandler.Save(_gameData);
     }
 
     public void LoadGame()
     {
-        _gameData = _fileDataHandler.Load();
+        _gameData = _fileDataHandler.TryLoadingData();
         if (_gameData == null)
         {
             _gameData = new GameData();
@@ -71,8 +69,5 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObject.LoadData(_gameData);
         }
-        Debug.Log(_gameData.CameraPosition);
-        //TODO: extract from here
-        Camera.main.transform.position = _gameData.CameraPosition;
     }
 }

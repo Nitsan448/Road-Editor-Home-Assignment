@@ -15,5 +15,6 @@ public class GameData
         Sections = new List<SectionPersistentData>();
         Junctions = new List<JunctionPersistentData>();
         SelectedJunctionId = 0;
+        CameraPosition = Vector3.zero;
     }
 }

@@ -16,38 +16,41 @@ public class FileDataHandler
         _saveFileName = saveFileName;
     }
 
-    public GameData Load()
+    public GameData TryLoadingData()
     {
-        string fullPath = Path.Combine(_saveFileDirectoryPath, _saveFileName);
-        GameData loadedData = null;
-        if (File.Exists(fullPath))
+        string fullPath = GetFullDataFilePath();
+        if (!File.Exists(fullPath))
         {
-            try
-            {
-                string dataToLoad = "";
-                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        dataToLoad = reader.ReadToEnd();
-                    }
-                }
-
-                loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Could not load data from file " + fullPath + "\n" + e.Message);
-            }
+            return null;
         }
 
-        return loadedData;
+        try
+        {
+            return LoadData(fullPath);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Could not load data from file " + fullPath + "\n" + e.Message);
+            return null;
+        }
+    }
+
+    private GameData LoadData(string fullPath)
+    {
+        string dataToLoad = "";
+        using (StreamReader reader = new StreamReader(fullPath))
+        {
+            dataToLoad = reader.ReadToEnd();
+        }
+
+
+        return JsonUtility.FromJson<GameData>(dataToLoad);
     }
 
 
     public void Save(GameData data)
     {
-        string fullPath = Path.Combine(_saveFileDirectoryPath, _saveFileName);
+        string fullPath = GetFullDataFilePath();
         try
         {
             //TODO: understand why not use directory path
@@ -55,18 +58,19 @@ public class FileDataHandler
 
             string dataToStore = JsonUtility.ToJson(data, true);
 
-            //TODO: use close?
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+            using (StreamWriter writer = new StreamWriter(fullPath))
             {
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(dataToStore);
-                }
+                writer.Write(dataToStore);
             }
         }
         catch (Exception e)
         {
             Debug.LogError("Could not save data to file " + fullPath + "\n" + e.Message);
         }
+    }
+
+    private string GetFullDataFilePath()
+    {
+        return Path.Combine(_saveFileDirectoryPath, _saveFileName);
     }
 }
