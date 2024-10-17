@@ -532,7 +532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _screenPositionOffset: {x: 0, y: 22, z: 0}
-  _mouseRayCastsManager: {fileID: 2122984070}
 --- !u!1 &281413120
 GameObject:
   m_ObjectHideFlags: 0

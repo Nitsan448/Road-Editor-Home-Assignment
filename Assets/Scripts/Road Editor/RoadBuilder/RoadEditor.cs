@@ -56,7 +56,6 @@ public class RoadEditor
 
     public void DeleteSelectedRoad()
     {
-        Debug.Log(_roadDeleter);
         _roadDeleter.DeleteSelectedRoad();
     }
 }

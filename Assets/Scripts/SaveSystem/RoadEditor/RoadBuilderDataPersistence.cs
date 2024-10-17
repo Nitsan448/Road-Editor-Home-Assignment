@@ -61,8 +61,9 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 
     private void LoadJunctionsData(GameData loadedData)
     {
-        foreach (Junction junction in _junctionsEditor.Junctions)
+        for (int i = _junctionsEditor.Junctions.Count - 1; i >= 0; i--)
         {
+            Junction junction = _junctionsEditor.Junctions[i];
             _junctionsEditor.DeleteJunction(junction);
         }
         foreach (JunctionPersistentData junctionData in loadedData.Junctions)
@@ -75,8 +76,9 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 
     private void LoadSectionsData(GameData loadedData)
     {
-        foreach (Section section in _sectionsEditor.Sections)
+        for (int i = _sectionsEditor.Sections.Count - 1; i >= 0; i--)
         {
+            Section section = _sectionsEditor.Sections[i];
             _sectionsEditor.DeleteSection(section);
         }
         foreach (SectionPersistentData sectionData in loadedData.Sections)
