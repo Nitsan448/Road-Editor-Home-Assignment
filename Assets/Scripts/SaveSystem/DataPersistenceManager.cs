@@ -8,6 +8,9 @@ using UnityEngine;
 public class DataPersistenceManager : MonoBehaviour
 {
     public static DataPersistenceManager Instance { get; private set; }
+
+    [SerializeField] private string _saveFileName;
+    private FileDataHandler _fileDataHandler;
     private List<IDataPersistence> _dataPersistenceObjects = new List<IDataPersistence>();
     private GameData _gameData;
 
@@ -26,6 +29,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Start()
     {
+        _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
         NewGame();
         SaveGame();
         LoadGame();
@@ -53,10 +57,17 @@ public class DataPersistenceManager : MonoBehaviour
         {
             dataPersistenceObject.SaveData(_gameData);
         }
+
+        _fileDataHandler.Save(_gameData);
     }
 
     public void LoadGame()
     {
+        _gameData = _fileDataHandler.Load();
+        if (_gameData == null)
+        {
+            return;
+        }
         foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
         {
             dataPersistenceObject.LoadData(_gameData);
