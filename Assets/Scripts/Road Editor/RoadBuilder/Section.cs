@@ -10,7 +10,7 @@ public class Section : MonoBehaviour
 
     public SectionPersistentData GetSectionPersistentData()
     {
-        return new SectionPersistentData(StartJunction.JunctionID, EndJunction.JunctionID);
+        return new SectionPersistentData(StartJunction.Id, EndJunction.Id);
 
     }
 }

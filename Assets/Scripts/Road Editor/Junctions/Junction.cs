@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Junction : MonoBehaviour
 {
-    public int JunctionID;
+    public int Id;
     public List<Section> ConnectedSections = new List<Section>();
+
+    public JunctionPersistentData GetJunctionPersistentData()
+    {
+        return new JunctionPersistentData(Id, transform.position);
+    }
 }

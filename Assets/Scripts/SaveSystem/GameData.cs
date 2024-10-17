@@ -6,9 +6,11 @@ using UnityEngine;
 public class GameData
 {
     public List<SectionPersistentData> Sections;
+    public List<JunctionPersistentData> Junctions;
 
     public GameData()
     {
         Sections = new List<SectionPersistentData>();
+        Junctions = new List<JunctionPersistentData>();
     }
 }
