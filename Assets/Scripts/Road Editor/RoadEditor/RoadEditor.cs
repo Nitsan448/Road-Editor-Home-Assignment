@@ -43,15 +43,21 @@ public class RoadEditor
     public void BuildSectionToJunction(Junction targetJunction)
     {
         _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, targetJunction);
+        SelectJunction(targetJunction);
     }
 
-    public void SplitSection(Section section, Vector3 splitPosition)
+    public void BuildSectionToSection(Section targetSection, Vector3 splitPosition)
     {
-        Junction builtJunction = _junctionsEditor.BuildJunction(splitPosition);
-        _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, builtJunction);
-        _roadBuilder.BuildSectionBetweenJunctions(builtJunction, section.StartJunction);
-        _roadBuilder.BuildSectionBetweenJunctions(builtJunction, section.EndJunction);
-        SelectJunction(builtJunction);
+        Junction createdJunction = _junctionsEditor.BuildJunction(splitPosition);
+        _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, createdJunction);
+        SplitSectionAtJunction(targetSection, createdJunction);
+        SelectJunction(createdJunction);
+    }
+
+    private void SplitSectionAtJunction(Section section, Junction junction)
+    {
+        _roadBuilder.BuildSectionBetweenJunctions(junction, section.StartJunction);
+        _roadBuilder.BuildSectionBetweenJunctions(junction, section.EndJunction);
         section.Delete();
     }
 
