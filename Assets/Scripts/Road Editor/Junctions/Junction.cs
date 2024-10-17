@@ -12,19 +12,21 @@ public class Junction : MonoBehaviour
         return new JunctionPersistentData(Id, transform.position);
     }
 
-    public Junction GetConnectedJunction()
+    public List<Junction> GetConnectedJunctions()
     {
+        List<Junction> connectedJunctions = new List<Junction>();
         foreach (Section connectedSection in ConnectedSections)
         {
             if (connectedSection.StartJunction == this)
             {
-                return connectedSection.EndJunction;
+                connectedJunctions.Add(connectedSection.EndJunction);
             }
             if (connectedSection.EndJunction == this)
             {
-                return connectedSection.StartJunction;
+                connectedJunctions.Add(connectedSection.StartJunction);
             }
         }
-        return null;
+
+        return connectedJunctions;
     }
 }
