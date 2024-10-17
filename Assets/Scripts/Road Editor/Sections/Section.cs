@@ -12,11 +12,4 @@ public class Section : MonoBehaviour
     {
         return new SectionPersistentData(StartJunction.Id, EndJunction.Id);
     }
-
-    public void Delete()
-    {
-        StartJunction.ConnectedSections.Remove(this);
-        EndJunction.ConnectedSections.Remove(this);
-        Destroy(gameObject);
-    }
 }

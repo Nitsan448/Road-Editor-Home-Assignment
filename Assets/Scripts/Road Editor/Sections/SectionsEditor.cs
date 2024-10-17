@@ -66,6 +66,8 @@ public class SectionsEditor
     public void DeleteSection(Section section)
     {
         Sections.Remove(section);
-        section.Delete();
+        section.StartJunction.ConnectedSections.Remove(section);
+        section.EndJunction.ConnectedSections.Remove(section);
+        Object.Destroy(section.gameObject);
     }
 }
