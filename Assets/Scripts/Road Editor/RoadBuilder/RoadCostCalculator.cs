@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoadCostCalculator
+public class RoadCostCalculator : MonoBehaviour
 {
     public float HeightDifference { get; private set; }
     public float CurrentRoadCost { get; private set; }
+    public bool IsRoadValid { get; private set; }
+
 
     public void CalculateRoadCost(Vector3 startPoint, Vector3 endPoint)
     {
@@ -26,5 +29,10 @@ public class RoadCostCalculator
 
         float flatDistance = Vector2.Distance(startPoint, endPoint);
         return Mathf.Max(1, flatDistance);
+    }
+
+    public void CalculateRoadValidity(float maxRoadDistance, float maxHeightDif)
+    {
+        IsRoadValid = CurrentRoadCost < maxRoadDistance && HeightDifference < maxHeightDif;
     }
 }

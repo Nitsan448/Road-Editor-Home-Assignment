@@ -6,14 +6,10 @@ using UnityEngine;
 
 public class SimpleRoadEditorManager : RoadEditorManager_Base
 {
-    public Action StartedRoadEdit;
-
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private MouseRayCaster _mouseRayCaster;
-    [SerializeField] private RoadCostText _roadCostText;
-
-    private RoadCostCalculator _roadCostCalculator;
+    [SerializeField] private RoadCostCalculator _roadCostCalculator;
     private RoadBuilder _roadBuilder;
     private bool _editing = false;
 
@@ -22,7 +18,6 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     public override bool Init()
     {
-        _roadCostCalculator = new RoadCostCalculator();
         _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator, _mouseRayCaster);
         return true;
     }
@@ -41,6 +36,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
         _roadBuilder.UpdateNextSection();
         _roadCostCalculator.CalculateRoadCost(_roadBuilder.NextSectionStartPoint, _roadBuilder.NextSectionEndPoint);
+        _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             EditRoads();
@@ -61,12 +57,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
 
     private void BuildRoadIfPossible()
     {
-        if (!IsRoadValid()) return;
+        if (!_roadCostCalculator.IsRoadValid) return;
         _roadBuilder.BuildRoad();
-    }
-
-    public bool IsRoadValid()
-    {
-        return _roadCostCalculator.CurrentRoadCost < MaxRoadDistance && _roadCostCalculator.HeightDifference < MaxHeightDif;
     }
 }

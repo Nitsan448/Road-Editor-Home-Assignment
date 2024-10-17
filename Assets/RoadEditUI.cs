@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RoadEditUI : MonoBehaviour
 {
-    [SerializeField] private SimpleRoadEditorManager _simpleRoadEditorManager;
+    [SerializeField] private RoadEditorManager_Base _roadEditorManager;
     [SerializeField] private RoadCostText _roadCostText;
 
     [SerializeField] private GameObject Ui;
@@ -17,12 +17,12 @@ public class RoadEditUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _simpleRoadEditorManager.StartedRoadEdit += ShowUI;
+        _roadEditorManager.StartedRoadEdit += ShowUI;
     }
 
     private void OnDisable()
     {
-        _simpleRoadEditorManager.StartedRoadEdit -= ShowUI;
+        _roadEditorManager.StartedRoadEdit -= ShowUI;
     }
 
     private void ShowUI()
@@ -32,6 +32,6 @@ public class RoadEditUI : MonoBehaviour
 
     private void Update()
     {
-        _roadCostText.UpdateRoadCostText(_simpleRoadEditorManager);
+        _roadCostText.UpdateRoadCostText();
     }
 }
