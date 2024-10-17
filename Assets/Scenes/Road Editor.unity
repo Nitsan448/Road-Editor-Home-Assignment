@@ -321,7 +321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 218048689}
-  - component: {fileID: 218048690}
+  - component: {fileID: 218048691}
   m_Layer: 0
   m_Name: Simple Road Editor
   m_TagString: Untagged
@@ -343,7 +343,7 @@ Transform:
   m_Father: {fileID: 865898130}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &218048690
+--- !u!114 &218048691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 218048688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f16215a20bcaff944840be3076ca092a, type: 3}
+  m_Script: {fileID: 11500000, guid: 49f1eadadcc7f2c4c8779fc6559dabc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxRoadDistance: 100
@@ -365,6 +365,7 @@ MonoBehaviour:
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 2122984070}
   _roadEditUIManager: {fileID: 1039345227}
+  _roadEditorManagerInputHandler: {fileID: 594638478}
 --- !u!1 &226602698
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +775,49 @@ Transform:
   m_Father: {fileID: 1215515657}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &594638476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 594638477}
+  - component: {fileID: 594638478}
+  m_Layer: 0
+  m_Name: Road Editor Manager Simple Input Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &594638477
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594638476}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 865898130}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &594638478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594638476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46d9602bc2585664aac4c75d75ea0f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &842903888
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,6 +881,8 @@ Transform:
   - {fileID: 1102362674}
   - {fileID: 1039345226}
   - {fileID: 2122984069}
+  - {fileID: 594638477}
+  - {fileID: 1192850298}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1040,6 +1086,7 @@ MonoBehaviour:
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 2122984070}
   _roadEditUIManager: {fileID: 1039345227}
+  _roadEditorManagerInputHandler: {fileID: 1192850299}
 --- !u!4 &1102362674
 Transform:
   m_ObjectHideFlags: 0
@@ -1054,6 +1101,49 @@ Transform:
   m_Father: {fileID: 865898130}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1192850297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1192850298}
+  - component: {fileID: 1192850299}
+  m_Layer: 0
+  m_Name: RoadEditorAdvancedInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1192850298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192850297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 865898130}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1192850299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192850297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d8706e537365949a02709b19040514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215515656
 GameObject:
   m_ObjectHideFlags: 0
