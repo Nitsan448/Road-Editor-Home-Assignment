@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class SectionsBuilder
+public class SectionsHandler
 {
     public List<Section> Sections { get; private set; } = new List<Section>();
 
@@ -16,7 +16,7 @@ public class SectionsBuilder
     private Vector3 _nextSectionEndPoint;
 
 
-    public SectionsBuilder(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
+    public SectionsHandler(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
         _underConstructionNodePrefab = underConstructionNodePrefab;
         _builtNodePrefab = builtNodePrefab;
@@ -71,6 +71,7 @@ public class SectionsBuilder
 
     public void DeleteSection(Section section)
     {
+        Sections.Remove(section);
         Object.Destroy(section.gameObject);
     }
 }

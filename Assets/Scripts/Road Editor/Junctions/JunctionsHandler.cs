@@ -34,6 +34,7 @@ public class JunctionsHandler
 
     public void DeleteJunction(Junction junction)
     {
+        Junctions.Remove(junction);
         Object.Destroy(junction.gameObject);
     }
 

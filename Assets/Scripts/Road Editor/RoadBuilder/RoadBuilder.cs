@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 public class RoadBuilder
 {
     private JunctionsHandler _junctionsHandler;
-    private SectionsBuilder _sectionsBuilder;
+    private SectionsHandler _sectionsHandler;
     private RoadBuilderDataPersistence _dataPersistence;
     private RoadCostCalculator _roadCostCalculator;
     private MouseRayCaster _mouseRayCaster;
@@ -21,27 +21,27 @@ public class RoadBuilder
         _roadCostCalculator = roadCostCalculator;
         _mouseRayCaster = mouseRayCaster;
         _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
-        _sectionsBuilder = new SectionsBuilder(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
-        _dataPersistence = new RoadBuilderDataPersistence(_junctionsHandler, _sectionsBuilder);
+        _sectionsHandler = new SectionsHandler(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
+        _dataPersistence = new RoadBuilderDataPersistence(_junctionsHandler, _sectionsHandler);
     }
 
     public void StartBuildingRoads(Vector3 firstJunctionPosition)
     {
         _junctionsHandler.BuildJunction(firstJunctionPosition);
-        _sectionsBuilder.CreateNextSectionPreview();
+        _sectionsHandler.CreateNextSectionPreview();
     }
 
     public void UpdateNextSection()
     {
         NextSectionStartPoint = _junctionsHandler.SelectedJunction.transform.position;
         NextSectionEndPoint = _mouseRayCaster.HitPositionOnTerrain;
-        _sectionsBuilder.UpdateNextSectionPoints(NextSectionStartPoint, NextSectionEndPoint);
-        _sectionsBuilder.UpdateNextSectionPreview();
+        _sectionsHandler.UpdateNextSectionPoints(NextSectionStartPoint, NextSectionEndPoint);
+        _sectionsHandler.UpdateNextSectionPreview();
     }
 
     public void BuildRoad()
     {
-        Section builtSection = _sectionsBuilder.BuildSection();
+        Section builtSection = _sectionsHandler.BuildSection();
         builtSection.StartJunction = _junctionsHandler.SelectedJunction;
         _junctionsHandler.SelectedJunction.ConnectedSections.Add(builtSection);
 
@@ -68,14 +68,14 @@ public class RoadBuilder
         _junctionsHandler.SelectedJunction = connectedJunctions[0];
         DeleteConnectedSections(junctionToDelete);
         DeleteEmptyJunctions(connectedJunctions);
-        Object.Destroy(junctionToDelete.gameObject);
+        _junctionsHandler.DeleteJunction(junctionToDelete);
     }
 
     private void DeleteConnectedSections(Junction junction)
     {
         foreach (Section section in junction.ConnectedSections)
         {
-            Object.Destroy(section.gameObject);
+            _sectionsHandler.DeleteSection(section);
         }
     }
 
@@ -85,7 +85,7 @@ public class RoadBuilder
         {
             if (junction.ConnectedSections.Count == 0)
             {
-                Object.Destroy(junction.gameObject);
+                _junctionsHandler.DeleteJunction(junction);
             }
         }
     }

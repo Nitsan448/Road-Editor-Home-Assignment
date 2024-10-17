@@ -6,13 +6,13 @@ using UnityEngine;
 public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 {
     private JunctionsHandler _junctionsHandler;
-    private SectionsBuilder _sectionsBuilder;
+    private SectionsHandler _sectionsHandler;
     private Dictionary<int, Junction> _junctionsByIds = new Dictionary<int, Junction>();
 
-    public RoadBuilderDataPersistence(JunctionsHandler junctionsHandler, SectionsBuilder sectionsBuilder)
+    public RoadBuilderDataPersistence(JunctionsHandler junctionsHandler, SectionsHandler sectionsHandler)
     {
         _junctionsHandler = junctionsHandler;
-        _sectionsBuilder = sectionsBuilder;
+        _sectionsHandler = sectionsHandler;
         DataPersistenceManager.Instance.Register(this);
     }
 
@@ -46,7 +46,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
     private void SaveSectionsData(GameData data)
     {
         data.Sections.Clear();
-        foreach (Section section in _sectionsBuilder.Sections)
+        foreach (Section section in _sectionsHandler.Sections)
         {
             data.Sections.Add(section.GetSectionPersistentData());
         }
@@ -75,16 +75,16 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
 
     private void LoadSectionsData(GameData loadedData)
     {
-        foreach (Section section in _sectionsBuilder.Sections)
+        foreach (Section section in _sectionsHandler.Sections)
         {
-            _sectionsBuilder.DeleteSection(section);
+            _sectionsHandler.DeleteSection(section);
         }
         foreach (SectionPersistentData sectionData in loadedData.Sections)
         {
             Junction startJunction = _junctionsByIds[sectionData.StartJunctionId];
             Junction endJunction = _junctionsByIds[sectionData.EndJunctionId];
-            _sectionsBuilder.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
-            Section builtSection = _sectionsBuilder.BuildSection();
+            _sectionsHandler.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
+            Section builtSection = _sectionsHandler.BuildSection();
             builtSection.StartJunction = startJunction;
             builtSection.EndJunction = endJunction;
             startJunction.ConnectedSections.Add(builtSection);
