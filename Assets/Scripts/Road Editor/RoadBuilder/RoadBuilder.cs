@@ -8,16 +8,16 @@ public class RoadBuilder
     private JunctionsHandler _junctionsHandler;
     private SectionsBuilder _sectionsBuilder;
     private RoadBuilderDataPersistence _dataPersistence;
-    private RoadValidityCalculator _roadValidityCalculator;
+    private RoadCostCalculator _roadCostCalculator;
     private MouseRayCaster _mouseRayCaster;
 
     public Vector3 NextSectionStartPoint;
     public Vector3 NextSectionEndPoint;
 
-    public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadValidityCalculator roadValidityCalculator,
+    public RoadBuilder(RoadNodePrefabsReferencer roadNodePrefabsReferencer, RoadCostCalculator roadCostCalculator,
         MouseRayCaster mouseRayCaster)
     {
-        _roadValidityCalculator = roadValidityCalculator;
+        _roadCostCalculator = roadCostCalculator;
         _mouseRayCaster = mouseRayCaster;
         _junctionsHandler = new JunctionsHandler(roadNodePrefabsReferencer.JunctionNode);
         _sectionsBuilder = new SectionsBuilder(roadNodePrefabsReferencer.UnderConstructionNode, roadNodePrefabsReferencer.BuiltNode);
@@ -30,7 +30,7 @@ public class RoadBuilder
         _sectionsBuilder.CreateNextSectionPreview();
     }
 
-    public void Update()
+    public void UpdateNextSection()
     {
         NextSectionStartPoint = _junctionsHandler.SelectedJunction.transform.position;
         NextSectionEndPoint = _mouseRayCaster.HitPositionOnTerrain;
