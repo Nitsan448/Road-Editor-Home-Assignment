@@ -27,7 +27,6 @@ public class JunctionsEditor
         builtJunction.Id = _lastBuiltJunctionId;
         _lastBuiltJunctionId++;
         Junctions.Add(builtJunction);
-        SelectedJunction = builtJunction;
 
         return builtJunction;
     }
