@@ -155,6 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55950d880fc769141a331f0dc5ffdbb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _highlightColor: {r: 0.7169812, g: 0.49546346, b: 0.18600929, a: 1}
-  _highlightScaleFactor: 1.05
+  _highlightColor: {r: 0.7924528, g: 0.4495934, b: 0.15325737, a: 1}
+  _highlightScaleFactor: 1.1
   _meshRenderer: {fileID: 2574370096880226978}
