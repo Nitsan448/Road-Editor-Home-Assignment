@@ -18,14 +18,18 @@ public class JunctionsHandler
         _junctionNodePrefab = junctionNodePrefab;
     }
 
-    public void BuildJunction(Vector3 junctionPosition)
+    public Junction BuildJunction(Vector3 junctionPosition)
     {
-        GameObject builtJunction = Object.Instantiate(_junctionNodePrefab);
-        builtJunction.transform.position = junctionPosition;
-        SelectedJunction = builtJunction.GetComponent<Junction>();
-        SelectedJunction.Id = _lastBuiltJunctionId;
+        GameObject createdObject = Object.Instantiate(_junctionNodePrefab);
+        createdObject.transform.position = junctionPosition;
+        Junction builtJunction = createdObject.GetComponent<Junction>();
+
+        builtJunction.Id = _lastBuiltJunctionId;
         _lastBuiltJunctionId++;
-        Junctions.Add(SelectedJunction);
+        Junctions.Add(builtJunction);
+        SelectedJunction = builtJunction;
+
+        return builtJunction;
     }
 
     public void DeleteJunction(Junction junction)
