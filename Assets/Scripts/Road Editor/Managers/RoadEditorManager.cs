@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RoadEditorManager : RoadEditorManager_Base
 {
+    public Action StartedRoadEdit;
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
     [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
@@ -17,7 +19,7 @@ public class RoadEditorManager : RoadEditorManager_Base
     public override bool Init()
     {
         _roadCostCalculator = new RoadCostCalculator();
-        _roadEditor = new RoadEditor(_roadNodePrefabsReferencer, _roadCostCalculator);
+        _roadEditor = new RoadEditor(_roadNodePrefabsReferencer);
         _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);
         _roadEditorInputHandler.Init(_mouseRayCastsManager, _roadEditor, _roadCostCalculator);
         return true;
@@ -42,7 +44,7 @@ public class RoadEditorManager : RoadEditorManager_Base
         _roadEditorInputHandler.ReactToInput();
     }
 
-    public override void DeleteSelectedRoad()
+    public void DeleteSelectedRoad()
     {
         _roadEditor.DeleteSelectedRoad();
     }

@@ -6,28 +6,20 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
 {
     public override void ReactToInput()
     {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            TryToEditRoads();
+        }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             TryToSelectJunction();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            BuildRoadIfPossible();
-        }
     }
 
-    private void TryToSelectJunction()
-    {
-        GameObject hitGameObject = _mouseRayCastsManager.HitObject;
-        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
-        {
-            RoadEditor.SelectJunction(junction);
-        }
-    }
-
-    private void BuildRoadIfPossible()
+    private void TryToEditRoads()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
+
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
@@ -40,6 +32,15 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         else
         {
             RoadEditor.BuildNewRoad();
+        }
+    }
+
+    private void TryToSelectJunction()
+    {
+        GameObject hitGameObject = _mouseRayCastsManager.HitObject;
+        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        {
+            RoadEditor.SelectJunction(junction);
         }
     }
 }

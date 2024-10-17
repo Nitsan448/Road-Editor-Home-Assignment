@@ -5,16 +5,12 @@ using UnityEngine;
 
 public abstract class RoadEditorManager_Base : MonoBehaviour
 {
-    public Action StartedRoadEdit;
     public float MaxRoadDistance = 100f;
     public float MaxHeightDif = 3f;
     public float HeightCostAdd = 2f;
 
-
     public abstract bool Init();
 
     public abstract void StartRoadEdit();
-
-    public abstract void DeleteSelectedRoad();
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RoadEditUIManager : MonoBehaviour
 {
-    private RoadEditorManager_Base _roadEditorManager;
+    private RoadEditorManager _roadEditorManager;
     private RoadCostCalculator _roadCostCalculator;
     private MouseRayCastsManager _mouseRayCastsManager;
 
@@ -13,7 +13,7 @@ public class RoadEditUIManager : MonoBehaviour
     [SerializeField] private DeleteRoadButton _deleteRoadButton;
     [SerializeField] private GameObject Ui;
 
-    public void Init(RoadEditorManager_Base roadEditorManager, RoadCostCalculator roadCostCalculator,
+    public void Init(RoadEditorManager roadEditorManager, RoadCostCalculator roadCostCalculator,
         MouseRayCastsManager mouseRayCastsManager)
     {
         _roadEditorManager = roadEditorManager;
