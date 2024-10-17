@@ -6,7 +6,7 @@ using UnityEngine;
 public class HighlightableObject : MonoBehaviour
 {
     [SerializeField] private Color _highlightColor;
-    [SerializeField] private float _highlightScaleFactor;
+    [SerializeField] private float _highlightScaleFactor = 1.05f;
     [SerializeField] private MeshRenderer _meshRenderer;
 
     private Color _defaultColor;
