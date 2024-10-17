@@ -518,6 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 226602699}
+  _fixedSizeOverMouseUI: {fileID: 226602703}
 --- !u!114 &226602703
 MonoBehaviour:
   m_ObjectHideFlags: 0

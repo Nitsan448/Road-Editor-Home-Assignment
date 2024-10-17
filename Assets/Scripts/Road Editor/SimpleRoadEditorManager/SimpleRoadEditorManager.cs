@@ -19,7 +19,7 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
     {
         _roadCostCalculator = new RoadCostCalculator();
         _roadBuilder = new RoadBuilder(_roadNodePrefabsReferencer, _roadCostCalculator);
-        _roadEditUIManager.Init(this, _roadCostCalculator);
+        _roadEditUIManager.Init(this, _roadCostCalculator, _mouseRayCastsManager);
         return true;
     }
 

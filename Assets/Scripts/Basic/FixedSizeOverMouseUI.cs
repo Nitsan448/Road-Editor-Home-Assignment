@@ -7,13 +7,14 @@ using UnityEngine;
 public class FixedSizeOverMouseUI : MonoBehaviour
 {
     [SerializeField] private Vector3 _screenPositionOffset;
-    [SerializeField] private MouseRayCastsManager _mouseRayCastsManager;
 
+    private MouseRayCastsManager _mouseRayCastsManager;
     private Camera _mainCamera;
 
-    private void Start()
+    public void Init(MouseRayCastsManager mouseRayCastsManager)
     {
         _mainCamera = Camera.main;
+        _mouseRayCastsManager = mouseRayCastsManager;
     }
 
     private void Update()
