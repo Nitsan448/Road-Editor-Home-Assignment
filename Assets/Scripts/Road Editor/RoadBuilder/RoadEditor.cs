@@ -34,19 +34,41 @@ public class RoadEditor
     {
         NextSectionStartPoint = _junctionsEditor.SelectedJunction.transform.position;
         NextSectionEndPoint = hitPositionOnTerrain;
-        _sectionsEditor.UpdateNextSectionPoints(NextSectionStartPoint, NextSectionEndPoint);
-        _sectionsEditor.UpdateNextSectionPreview();
+        _sectionsEditor.UpdateNextSectionPreview(NextSectionStartPoint, NextSectionEndPoint);
     }
 
-    public void BuildRoad()
+    public void BuildSectionToJunction(Junction targetJunction)
     {
-        Section builtSection = _sectionsEditor.BuildSection();
+        BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, targetJunction);
+    }
+
+    public void BuildSectionBetweenJunctions(Junction startJunction, Junction endJunction)
+    {
+        Section builtSection = _sectionsEditor.BuildSection(startJunction.transform.position, endJunction.transform.position);
+        builtSection.StartJunction = startJunction;
+        startJunction.ConnectedSections.Add(builtSection);
+
+        builtSection.EndJunction = endJunction;
+        endJunction.ConnectedSections.Add(builtSection);
+    }
+
+    public void BuildNewRoad()
+    {
+        Section builtSection = _sectionsEditor.BuildSection(NextSectionStartPoint, NextSectionEndPoint);
         builtSection.StartJunction = _junctionsEditor.SelectedJunction;
         _junctionsEditor.SelectedJunction.ConnectedSections.Add(builtSection);
 
         Junction builtJunction = _junctionsEditor.BuildJunction(NextSectionEndPoint);
         builtSection.EndJunction = builtJunction;
         builtJunction.ConnectedSections.Add(builtSection);
+    }
+
+    public void SplitSection(Section section, Vector3 splitPosition)
+    {
+        Junction builtJunction = _junctionsEditor.BuildJunction(splitPosition);
+        BuildSectionBetweenJunctions(builtJunction, section.StartJunction);
+        BuildSectionBetweenJunctions(builtJunction, section.EndJunction);
+        section.Delete();
     }
 
     public void SelectJunction(Junction junction)

@@ -1,10 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class SimpleRoadEditorManager : RoadEditorManager_Base
+public class AdvancedRoadEditorManager : RoadEditorManager_Base
 {
     [SerializeField] private RoadNodePrefabsReferencer _roadNodePrefabsReferencer;
     [SerializeField] private Vector3 _firstJunctionPosition = new Vector3(250, 0, -200);
@@ -39,28 +37,41 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         _roadEditor.UpdateNextSection(_mouseRayCastsManager.HitPositionOnTerrain);
         _roadCostCalculator.CalculateRoadCost(_roadEditor.NextSectionStartPoint, _roadEditor.NextSectionEndPoint);
         _roadCostCalculator.CalculateRoadValidity(MaxRoadDistance, MaxHeightDif);
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            TryToSelectJunction();
+        }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            EditRoads();
+            BuildRoadIfPossible();
         }
     }
 
-    private void EditRoads()
+    private void TryToSelectJunction()
     {
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
         if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
             _roadEditor.SelectJunction(junction);
-            return;
         }
-
-        BuildRoadIfPossible();
     }
 
     private void BuildRoadIfPossible()
     {
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
-        _roadEditor.BuildNewRoad();
+        GameObject hitGameObject = _mouseRayCastsManager.HitObject;
+        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        {
+            _roadEditor.BuildSectionToJunction(junction);
+        }
+        else if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Section section))
+        {
+            _roadEditor.SplitSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
+        }
+        else
+        {
+            _roadEditor.BuildNewRoad();
+        }
     }
 
     public override void DeleteSelectedRoad()

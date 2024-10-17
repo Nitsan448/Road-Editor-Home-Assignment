@@ -106,6 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3707586549945980499}
   - component: {fileID: 3314730472671252776}
+  - component: {fileID: 3959103217122177661}
   m_Layer: 0
   m_Name: Road Node Built Prefab
   m_TagString: Untagged
@@ -142,3 +143,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartJunction: {fileID: 0}
   EndJunction: {fileID: 0}
+--- !u!114 &3959103217122177661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3707586549945980498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55950d880fc769141a331f0dc5ffdbb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _highlightColor: {r: 0.8301887, g: 0.43727148, b: 0.1527234, a: 1}
+  _highlightScaleFactor: 1
+  _meshRenderer: {fileID: 3707586549129373104}

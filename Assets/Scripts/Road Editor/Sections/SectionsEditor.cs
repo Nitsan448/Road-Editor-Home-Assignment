@@ -12,9 +12,6 @@ public class SectionsEditor
     private GameObject _builtNodePrefab;
     private GameObject _sectionPreviewNode;
 
-    private Vector3 _nextSectionStartPoint;
-    private Vector3 _nextSectionEndPoint;
-
 
     public SectionsEditor(GameObject underConstructionNodePrefab, GameObject builtNodePrefab)
     {
@@ -27,43 +24,36 @@ public class SectionsEditor
         _sectionPreviewNode = Object.Instantiate(_underConstructionNodePrefab);
     }
 
-
-    public void UpdateNextSectionPoints(Vector3 startPoint, Vector3 endPoint)
+    public void UpdateNextSectionPreview(Vector3 startPoint, Vector3 endPoint)
     {
-        _nextSectionStartPoint = startPoint;
-        _nextSectionEndPoint = endPoint;
-    }
-
-    public void UpdateNextSectionPreview()
-    {
-        SetNodeTransform(_sectionPreviewNode.transform);
+        SetNodeTransform(_sectionPreviewNode.transform, startPoint, endPoint);
     }
 
 
-    private void SetNodeTransform(Transform node)
+    private void SetNodeTransform(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
-        node.transform.position = _nextSectionStartPoint;
-        SetNodeLength(node);
-        SetNodeRotation(node);
+        node.transform.position = startPoint;
+        SetNodeLength(node, startPoint, endPoint);
+        SetNodeRotation(node, startPoint, endPoint);
     }
 
-    private void SetNodeLength(Transform node)
+    private void SetNodeLength(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
-        float length = Vector3.Distance(_nextSectionStartPoint, _nextSectionEndPoint);
+        float length = Vector3.Distance(startPoint, endPoint);
         node.localScale = new Vector3(node.localScale.x, node.localScale.y, length);
     }
 
-    private void SetNodeRotation(Transform node)
+    private void SetNodeRotation(Transform node, Vector3 startPoint, Vector3 endPoint)
     {
-        Vector3 direction = _nextSectionEndPoint - _nextSectionStartPoint;
+        Vector3 direction = endPoint - startPoint;
         if (direction.magnitude <= Mathf.Epsilon) return;
         node.rotation = Quaternion.LookRotation(direction);
     }
 
-    public Section BuildSection()
+    public Section BuildSection(Vector3 startPoint, Vector3 endPoint)
     {
         GameObject createdObject = Object.Instantiate(_builtNodePrefab);
-        SetNodeTransform(createdObject.transform);
+        SetNodeTransform(createdObject.transform, startPoint, endPoint);
         Section builtSection = createdObject.GetComponent<Section>();
         Sections.Add(builtSection);
         return builtSection;

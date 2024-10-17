@@ -85,8 +85,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
         {
             Junction startJunction = _junctionsByIds[sectionData.StartJunctionId];
             Junction endJunction = _junctionsByIds[sectionData.EndJunctionId];
-            _sectionsEditor.UpdateNextSectionPoints(startJunction.transform.position, endJunction.transform.position);
-            Section builtSection = _sectionsEditor.BuildSection();
+            Section builtSection = _sectionsEditor.BuildSection(startJunction.transform.position, endJunction.transform.position);
             builtSection.StartJunction = startJunction;
             builtSection.EndJunction = endJunction;
             startJunction.ConnectedSections.Add(builtSection);

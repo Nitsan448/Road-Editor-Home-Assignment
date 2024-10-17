@@ -24,16 +24,9 @@ public class RoadDeleter
         if (connectedJunctions.Count == 0) return;
 
         DeleteConnectedSections(junctionToDelete);
-        Junction notDeletedJunction = DeleteEmptyJunctions(connectedJunctions);
         _junctionsEditor.DeleteJunction(junctionToDelete);
-        if (notDeletedJunction != null)
-        {
-            _junctionsEditor.SelectedJunction = notDeletedJunction;
-        }
-        else
-        {
-            _junctionsEditor.SelectedJunction = _junctionsEditor.Junctions[0];
-        }
+        Junction notDeletedJunction = DeleteEmptyJunctions(connectedJunctions);
+        _junctionsEditor.SelectedJunction = notDeletedJunction != null ? notDeletedJunction : _junctionsEditor.Junctions[0];
     }
 
     private void DeleteConnectedSections(Junction junction)
