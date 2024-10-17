@@ -27,6 +27,7 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         }
         else if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Section section))
         {
+            //This breaks save system
             RoadEditor.BuildSectionToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
         }
         else
