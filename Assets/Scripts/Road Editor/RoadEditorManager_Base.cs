@@ -14,4 +14,6 @@ public abstract class RoadEditorManager_Base : MonoBehaviour
 
     public abstract void StartRoadEdit();
 
+    public abstract void DeleteSelectedRoad();
+
 }

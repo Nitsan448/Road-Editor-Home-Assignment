@@ -8,6 +8,7 @@ public class RoadEditUIManager : MonoBehaviour
     private RoadEditorManager_Base _roadEditorManager;
     [SerializeField] private RoadCostText _roadCostText;
     [SerializeField] private RoadCostCalculator _roadCostCalculator;
+    [SerializeField] private DeleteRoadButton _deleteRoadButton;
 
     [SerializeField] private GameObject Ui;
 
@@ -17,7 +18,7 @@ public class RoadEditUIManager : MonoBehaviour
         _roadCostCalculator = roadCostCalculator;
         Ui.gameObject.SetActive(false);
         _roadCostText.Init(_roadCostCalculator);
-        Ui.gameObject.SetActive(false);
+        _deleteRoadButton.Init(_roadEditorManager);
     }
 
     public void ShowUI()

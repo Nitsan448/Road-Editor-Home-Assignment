@@ -51,4 +51,14 @@ public class RoadBuilder
     {
         _junctionsHandler.SelectedJunction = junction;
     }
+
+    public void DeleteSelectedRoad()
+    {
+        DeleteRoad(_junctionsHandler.SelectedJunction);
+    }
+
+    private void DeleteRoad(Junction junctionToDelete)
+    {
+
+    }
 }

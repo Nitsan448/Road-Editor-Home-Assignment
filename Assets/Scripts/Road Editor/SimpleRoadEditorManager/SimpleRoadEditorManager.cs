@@ -62,4 +62,9 @@ public class SimpleRoadEditorManager : RoadEditorManager_Base
         if (!_roadCostCalculator.IsRoadValid) return;
         _roadBuilder.BuildRoad();
     }
+
+    public override void DeleteSelectedRoad()
+    {
+        _roadBuilder.DeleteSelectedRoad();
+    }
 }
