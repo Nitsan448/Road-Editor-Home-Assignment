@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: refactor
 public class RoadDeleter
 {
     private JunctionsEditor _junctionsEditor;
@@ -13,12 +14,7 @@ public class RoadDeleter
         _sectionsEditor = sectionsEditor;
     }
 
-    public void DeleteSelectedRoad()
-    {
-        DeleteRoad(_junctionsEditor.SelectedJunction);
-    }
-
-    private void DeleteRoad(Junction junctionToDelete)
+    public void DeleteRoad(Junction junctionToDelete)
     {
         List<Junction> connectedJunctions = junctionToDelete.GetConnectedJunctions();
         if (connectedJunctions.Count == 0) return;
@@ -43,8 +39,7 @@ public class RoadDeleter
         Junction notDeletedJunction = null;
         foreach (Junction junction in junctions)
         {
-            //TODO: refactor
-            bool isLastJunction = _junctionsEditor.GetNumberOfJunctions() == 2;
+            bool isLastJunction = _junctionsEditor.GetNumberOfJunctions() == 1;
             if (junction.ConnectedSections.Count == 0 && !isLastJunction)
             {
                 _junctionsEditor.DeleteJunction(junction);

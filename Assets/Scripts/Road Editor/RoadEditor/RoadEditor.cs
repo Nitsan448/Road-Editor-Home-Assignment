@@ -70,6 +70,6 @@ public class RoadEditor
 
     public void DeleteSelectedRoad()
     {
-        _roadDeleter.DeleteSelectedRoad();
+        _roadDeleter.DeleteRoad(_junctionsEditor.SelectedJunction);
     }
 }
