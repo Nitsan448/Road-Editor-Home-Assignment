@@ -11,4 +11,20 @@ public class Junction : MonoBehaviour
     {
         return new JunctionPersistentData(Id, transform.position);
     }
+
+    public Junction GetConnectedJunction()
+    {
+        foreach (Section connectedSection in ConnectedSections)
+        {
+            if (connectedSection.StartJunction == this)
+            {
+                return connectedSection.EndJunction;
+            }
+            if (connectedSection.EndJunction == this)
+            {
+                return connectedSection.StartJunction;
+            }
+        }
+        return null;
+    }
 }
