@@ -33,9 +33,7 @@ public class RoadBuilderDataPersistence : IDataPersistence, IDisposable
         foreach (Junction junction in _junctionsEditor.Junctions)
         {
             data.Junctions.Add(junction.GetJunctionPersistentData());
-
-            //TODO: Fix this
-            //TODO: check if this was fixed
+            
             if (_junctionsEditor.SelectedJunction == junction)
             {
                 data.SelectedJunctionId = junction.Id;

@@ -21,25 +21,25 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         if (!_roadCostCalculator.IsRoadValid || UIHelpers.IsOverUI()) return;
 
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
-        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        if (hitGameObject == null) return;
+        if (hitGameObject.TryGetComponent(out Terrain terrain))
+        {
+            _roadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
+        }
+        else if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
             _roadEditor.BuildSectionToJunction(junction);
         }
-        else if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Section section))
+        else if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Section section))
         {
-            //This breaks save system
             _roadEditor.BuildSectionToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
-        }
-        else
-        {
-            _roadEditor.BuildNewRoad(_mouseRayCastsManager.HitPositionOnTerrain);
         }
     }
 
     private void TryToSelectJunction()
     {
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
-        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
             _roadEditor.SelectJunction(junction);
         }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-//TODO: refactor
 public class FileDataHandler
 {
     private string _saveFileDirectoryPath;

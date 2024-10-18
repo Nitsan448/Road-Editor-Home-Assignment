@@ -15,7 +15,7 @@ public class RoadEditorSimpleInputHandler : ARoadEditorInputHandler
     private void EditRoads()
     {
         GameObject hitGameObject = _mouseRayCastsManager.HitObject;
-        if (hitGameObject != null && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
+        if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
             _roadEditor.SelectJunction(junction);
             return;

@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class ObjectHighlighter
 {
-    private GameObject _previouslyHitObjectParent;
+    private GameObject _previouslyHitObject;
 
     public void HandleObjectHighlighting(GameObject hitObject)
     {
-        if (_previouslyHitObjectParent == hitObject) return;
+        if (_previouslyHitObject == hitObject) return;
         HighlightableObject highlightableObject;
 
-        if (_previouslyHitObjectParent != null && _previouslyHitObjectParent.TryGetComponent(out highlightableObject))
+        if (_previouslyHitObject.HasParent() && _previouslyHitObject.transform.parent.TryGetComponent(out highlightableObject))
         {
             highlightableObject.StopHighlight();
         }
 
         if (hitObject == null)
         {
-            _previouslyHitObjectParent = null;
+            _previouslyHitObject = null;
             return;
         }
 
         GameObject hitObjectParent = hitObject.transform.parent.gameObject;
-        _previouslyHitObjectParent = hitObjectParent;
+        _previouslyHitObject = hitObject;
         if (hitObjectParent.TryGetComponent(out highlightableObject))
         {
             highlightableObject.Highlight();
