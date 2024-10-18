@@ -72,4 +72,10 @@ public class RoadEditor
     {
         _roadDeleter.DeleteRoad(_junctionsEditor.SelectedJunction);
     }
+
+    //For tests and database support
+    public int GetNumOfSections()
+    {
+        return _sectionsEditor.Sections.Count;
+    }
 }

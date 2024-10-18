@@ -49,4 +49,15 @@ public class RoadEditorManager : RoadEditorManager_Base
     {
         _roadEditor.DeleteSelectedRoad();
     }
+
+    //For tests and database support
+    public int GetNumOfSections()
+    {
+        return _roadEditor.GetNumOfSections();
+    }
+
+    public void AddSection(Vector3 endPoint)
+    {
+        _roadEditor.BuildNewRoad(endPoint);
+    }
 }
