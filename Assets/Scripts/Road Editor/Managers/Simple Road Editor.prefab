@@ -145,7 +145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7969279358261332472
 Transform:
   m_ObjectHideFlags: 0
@@ -180,6 +180,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7969279356422851532}
     m_Modifications:
+    - target: {fileID: 9028387879870293208, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9028387880230981273, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
       propertyPath: m_Name
       value: Road Edit UI Manager

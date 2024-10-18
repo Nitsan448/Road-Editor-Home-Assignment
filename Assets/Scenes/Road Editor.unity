@@ -606,14 +606,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple Road Editor
       objectReference: {fileID: 0}
-    - target: {fileID: 7969279357572902773, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7969279358261332473, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7969279358261332475, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
       propertyPath: _terrainCollider
       value: 
