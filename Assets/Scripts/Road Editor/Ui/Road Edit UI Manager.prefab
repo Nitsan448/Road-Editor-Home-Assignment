@@ -442,8 +442,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 5
-  m_fontSizeBase: 5
+  m_fontSize: 4
+  m_fontSizeBase: 4
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c05a8d35596f0746b8c8daeda4ccc2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _screenPositionOffset: {x: 0, y: 22, z: 0}
+  _screenPositionOffset: {x: 0, y: 26}
 --- !u!114 &9028387881041692190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 9028387881041692187}
-  _fixedSizeOverMouseUI: {fileID: 9028387881041692191}
+  _fixedSizeNearMouseObject: {fileID: 9028387881041692191}
 --- !u!1001 &5478519796074262455
 PrefabInstance:
   m_ObjectHideFlags: 0

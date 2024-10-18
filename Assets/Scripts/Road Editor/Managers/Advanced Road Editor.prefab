@@ -228,6 +228,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9028387881041692187, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
+      propertyPath: m_fontSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028387881041692187, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9028387881041692191, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
+      propertyPath: _screenPositionOffset.y
+      value: 26
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 623fcabd97a47d24fb992e187a1f0db9, type: 3}
 --- !u!4 &5537723819982455965 stripped

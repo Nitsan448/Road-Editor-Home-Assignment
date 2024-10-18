@@ -7,13 +7,13 @@ using UnityEngine;
 public class RoadCostText : MonoBehaviour
 {
     [SerializeField] private TextMeshPro _text;
-    [SerializeField] private FixedSizeOverMouseUI _fixedSizeOverMouseUI;
+    [SerializeField] private FixedSizeNearMouseObject _fixedSizeNearMouseObject;
     private RoadCostCalculator _roadCostCalculator;
 
     public void Init(RoadCostCalculator roadCostCalculator, MouseRayCastsManager mouseRayCastsManager)
     {
         _roadCostCalculator = roadCostCalculator;
-        _fixedSizeOverMouseUI.Init(mouseRayCastsManager);
+        _fixedSizeNearMouseObject.Init(mouseRayCastsManager);
     }
 
     public void UpdateRoadCostText()

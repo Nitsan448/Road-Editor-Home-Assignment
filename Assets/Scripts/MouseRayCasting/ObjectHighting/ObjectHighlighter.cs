@@ -9,8 +9,8 @@ public class ObjectHighlighter
     public void HandleObjectHighlighting(GameObject hitObject)
     {
         if (_previouslyHitObject == hitObject) return;
-        HighlightableObject highlightableObject;
 
+        HighlightableObject highlightableObject;
         if (_previouslyHitObject.HasParent() && _previouslyHitObject.transform.parent.TryGetComponent(out highlightableObject))
         {
             highlightableObject.StopHighlight();

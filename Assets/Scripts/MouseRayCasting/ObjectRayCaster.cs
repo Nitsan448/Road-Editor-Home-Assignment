@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectRayCaster
 {
     public GameObject HitObject { get; private set; }
+    
     private Camera _mainCamera;
     private Ray _ray;
     private ObjectHighlighter _objectHighlighter;

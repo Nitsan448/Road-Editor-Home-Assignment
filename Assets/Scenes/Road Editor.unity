@@ -672,26 +672,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Advanced Road Editor
       objectReference: {fileID: 0}
-    - target: {fileID: 1733381099624393163, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1733381099637341053, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
       propertyPath: _terrainCollider
       value: 
       objectReference: {fileID: 1298256760}
-    - target: {fileID: 5537723819712875544, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
-      propertyPath: _screenPositionOffset.y
-      value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 5537723819712875548, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
-      propertyPath: m_fontSize
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5537723819712875548, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
 --- !u!114 &1932375224 stripped
