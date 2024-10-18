@@ -606,18 +606,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple Road Editor
       objectReference: {fileID: 0}
-    - target: {fileID: 7969279356422851533, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7969279356422851534, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
-      propertyPath: _roadNodePrefabsReferencer
-      value: 
-      objectReference: {fileID: 11400000, guid: 17feb33fbc5d7244089c9fea918a4340, type: 2}
-    - target: {fileID: 7969279357212165428, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
-      propertyPath: m_Name
-      value: Road Edit UI Manager
-      objectReference: {fileID: 0}
     - target: {fileID: 7969279358261332475, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
       propertyPath: _terrainCollider
       value: 
@@ -684,13 +672,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Advanced Road Editor
       objectReference: {fileID: 0}
+    - target: {fileID: 1733381099624393163, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1733381099637341053, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
       propertyPath: _terrainCollider
       value: 
       objectReference: {fileID: 1298256760}
-    - target: {fileID: 5537723819982455966, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
-      propertyPath: m_Name
-      value: Road Edit UI Manager
+    - target: {fileID: 5537723819712875544, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: _screenPositionOffset.y
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537723819712875548, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: m_fontSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537723819712875548, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}

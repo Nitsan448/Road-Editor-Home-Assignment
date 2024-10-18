@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7969279356422851532
 Transform:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   MaxRoadDistance: 100
   MaxHeightDif: 3
   HeightCostAdd: 2
-  _roadNodePrefabsReferencer: {fileID: 11400000, guid: 3b290e0dc39847249ba125d61385e6b3, type: 2}
+  _roadNodePrefabsReferencer: {fileID: 11400000, guid: 17feb33fbc5d7244089c9fea918a4340, type: 2}
   _firstJunctionPosition: {x: 250, y: 0, z: -200}
   _mouseRayCastsManager: {fileID: 7969279358261332475}
   _roadEditUIManager: {fileID: 7969279357212165430}
