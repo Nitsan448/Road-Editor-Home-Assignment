@@ -31,7 +31,6 @@ public class SectionsEditor
         SetSectionTransformValues(_sectionPreviewNode.transform, startPoint, endPoint);
     }
 
-
     private void SetSectionTransformValues(Transform sectionTransform, Vector3 startPoint, Vector3 endPoint)
     {
         sectionTransform.position = startPoint;
@@ -66,8 +65,7 @@ public class SectionsEditor
     public void DeleteSection(Section section)
     {
         Sections.Remove(section);
-        section.StartJunction.ConnectedSections.Remove(section);
-        section.EndJunction.ConnectedSections.Remove(section);
+        section.DisconnectFromJunctions();
         Object.Destroy(section.gameObject);
     }
 }

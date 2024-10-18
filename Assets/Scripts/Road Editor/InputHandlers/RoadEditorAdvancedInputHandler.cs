@@ -28,11 +28,11 @@ public class RoadEditorAdvancedInputHandler : ARoadEditorInputHandler
         }
         else if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Junction junction))
         {
-            _roadEditor.BuildSectionToJunction(junction);
+            _roadEditor.BuildRoadToJunction(junction);
         }
         else if (hitGameObject.HasParent() && hitGameObject.transform.parent.TryGetComponent(out Section section))
         {
-            _roadEditor.BuildSectionToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
+            _roadEditor.BuildRoadToSection(section, _mouseRayCastsManager.HitPositionOnTerrain);
         }
     }
 

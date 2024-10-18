@@ -42,13 +42,13 @@ public class RoadEditor
         SelectJunction(builtJunction);
     }
 
-    public void BuildSectionToJunction(Junction targetJunction)
+    public void BuildRoadToJunction(Junction targetJunction)
     {
         _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, targetJunction);
         SelectJunction(targetJunction);
     }
 
-    public void BuildSectionToSection(Section targetSection, Vector3 splitPosition)
+    public void BuildRoadToSection(Section targetSection, Vector3 splitPosition)
     {
         Junction createdJunction = _junctionsEditor.BuildJunction(splitPosition);
         _roadBuilder.BuildSectionBetweenJunctions(_junctionsEditor.SelectedJunction, createdJunction);

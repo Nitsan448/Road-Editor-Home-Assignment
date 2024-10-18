@@ -606,6 +606,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple Road Editor
       objectReference: {fileID: 0}
+    - target: {fileID: 7969279357572902773, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7969279358261332473, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7969279358261332475, guid: ae7f37dbbe44210489b9eacc73109438, type: 3}
       propertyPath: _terrainCollider
       value: 
@@ -676,6 +684,14 @@ PrefabInstance:
       propertyPath: _terrainCollider
       value: 
       objectReference: {fileID: 1298256760}
+    - target: {fileID: 1733381099637341055, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537723818732580575, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38851333031a4e34ba86471bdfcee43f, type: 3}
 --- !u!114 &1932375224 stripped

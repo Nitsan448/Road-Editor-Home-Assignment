@@ -12,4 +12,10 @@ public class Section : MonoBehaviour
     {
         return new SectionPersistentData(StartJunction.Id, EndJunction.Id);
     }
+
+    public void DisconnectFromJunctions()
+    {
+        StartJunction.ConnectedSections.Remove(this);
+        EndJunction.ConnectedSections.Remove(this);
+    }
 }
